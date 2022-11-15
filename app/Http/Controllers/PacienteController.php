@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\Models\ges_pa;
 use App\Models\gestione;
 use App\Models\Paciente;
 use App\Models\pas_tra;
 use App\Models\paso;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\DB;
 use PDF;
+use Illuminate\Support\Facades\Mail;
 
 class PacienteController extends Controller
 {
@@ -58,7 +61,6 @@ class PacienteController extends Controller
     //AJAX
     public function cargarDatos(Request $request)
     {
-
         $tra_id = $request->tra_id;
 
         $sql = "SELECT pas.pas_id, pas.pas_descripcion
@@ -76,7 +78,7 @@ class PacienteController extends Controller
            )
        );
     }
-
+    //GESTION
     public function gestion($id) {
         
         $gestion = gestione::where("ges_id", $id)->get();
@@ -107,38 +109,51 @@ class PacienteController extends Controller
             "nombre_doctor" => $doctor[0]->doc_nombres.' '.$doctor[0]->doc_apellidos,
             "correo" => $pacientes[0]->pac_correo,
             "nombre_tratamiento" => $tratamiento[0]->tra_nombres,
-            "fecha_prox_gestion" => $gestion[0]->ges_fecha_prox_atencion
+            "fecha_prox_gestion" => $gestion[0]->ges_fecha_prox_atencion,
+            "observacion" => $gestion[0]->ges_notas      
         );
 
         for ($i=0; $i < count($pasos_tra); $i++) { 
             
             $p = 0;
             for ($a=0; $a < count($pasos); $a++) { 
-                
-                if($pasos_tra[$i]->pas_id == $pasos[$a]->pas_id){
-                    $pasospdf[] = array(
-                        "paso_descripcion" => $pasos_tra[$i]->pas_descripcion,
-                        "verificador" => "SI",
-                        "comentario" => ""
-                    );
-                    $p = 1;
-                }
-                
+                if($a != count($pasos)+1){
+                    if($pasos_tra[$i]->pas_id == $pasos[$a]->pas_id){
+                        $pasospdf[] = array(
+                            "paso_descripcion" => $pasos_tra[$i]->pas_descripcion,
+                            "verificador" => "SI",
+                            "comentario" => $pasos[$a]->gep_notas
+                            
+                        );
+                        $p = 1;
+                    }    
+                }                
             }
 
             if($p == 0){
                 $pasospdf[] = array(
                     "paso_descripcion" => $pasos_tra[$i]->pas_descripcion,
                     "verificador" => "NO",
-                    "comentario" => ""
+                    "comentario" => "" 
                 );
             }
             
         } 
-        return PDF::loadView('pdfgestion', compact('pdfInfo','pasospdf'))->stream('reporte.pdf');
+
+        $email = $pacientes[0]->pac_correo;
+        $pdf = PDF::loadView('pdfgestion', compact('pdfInfo','pasospdf'));
+
+        $data = ['foo' => 'baz']; 
+        Mail::send('email', $data, function ($mail) use ($pdf, $email) {
+            $mail->from('adminCFC@gmail.com', 'AdminCFC');
+            $mail->to($email);
+            $mail->attachData($pdf->output(), 'gestion.pdf');
+        });
+
+        return $pdf->download();
     }
 
-
+    //ENVIO DE DATOS A GESTION
     public function sendData(request $request){
          $ids_pasos = $request->pasos;
 
@@ -162,77 +177,14 @@ class PacienteController extends Controller
 
                 $pasos[] = array(
                     "ges_id" => $gestion->id, 
-                    "pas_id" => $ids_pasos[$i]
+                    "pas_id" => $ids_pasos[$i],
+                    "gep_notas" => $request->comentariocheck[$ids_pasos[$i]]
                 ); 
+
             } 
             ges_pa::insert($pasos);
         }
          return back();    
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

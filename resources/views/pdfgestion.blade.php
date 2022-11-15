@@ -19,11 +19,11 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
-        .text-information{
+        .text-information {
             font-size: 12px;
             padding: 0px !important;
             margin: 0px !important;
-            
+
         }
 
         table {
@@ -36,21 +36,21 @@
 <body>
     <div class="container-fluid px-5">
         <div class="col-12" style="margin-bottom: 5px">
-                <table>
-                    <tbody>
-                        <tr>
-                            <th><img src="./img/favicon.png"></th>
-                            <th style="color: rgb(0,112,192);">
-                                <h1>CHECKLIST FASE<br> HIGIÉNICA</h1> <br> FECHA DE ATENCION:
-                                {{ $pdfInfo[0]['fecha_atencion'] }}
-                            </th>
-                            <th><img src="./img/favicon.png"></th>
-                        </tr>
-                    </tbody>
-                </table>
+            <table>
+                <tbody>
+                    <tr>
+                        <th><img src="./img/favicon.png"></th>
+                        <th style="color: rgb(0,112,192);">
+                            <h1>CHECKLIST FASE<br> HIGIÉNICA</h1> <br> FECHA DE ATENCION:
+                            {{ $pdfInfo[0]['fecha_atencion'] }}
+                        </th>
+                        <th><img src="./img/favicon.png"></th>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <div  style="margin-bottom:5px">
+        <div style="margin-bottom:5px">
             <table>
                 <tbody>
                     <tr>
@@ -98,7 +98,7 @@
             <table>
                 <thead>
                     <div id="formato-checklist">
-                        <table  width="100%" cellspacing="0">
+                        <table width="100%" cellspacing="0">
                             <thead style="background-color:  rgb(0,112,192); color: #ffff;">
                                 <tr>
                                     <th rowspan="2" style="vertical-align:middle;">
@@ -136,7 +136,7 @@
 
         <div>
             <div id="formato-checklist">
-                <table  width="100%" cellspacing="0">
+                <table width="100%" cellspacing="0">
                     <tr style="background-color:  rgb(0,112,192); color: #ffff;">
                         <td>
                             <h2>OBSERVACIONES</h2>
@@ -145,15 +145,13 @@
                     <tr>
                         <td>
                             <input class="form-control" id="pregunta-1" rows="2">
+                            {{ $pdfInfo[0]['observacion'] }}
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
     </div>
-    <a href="" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-times mr-1"></i>Cerrar</a>
-
-
 </body>
 
 </html>

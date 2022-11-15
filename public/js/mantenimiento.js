@@ -50,7 +50,7 @@ window.onload = function(){
                                 '<input class="m-1 p-2" style="padding-top:30px !important"  type="checkbox" value="'+item['pas_id']+'" name="pasos[]">'+
                                 '</td>' +
                                 '<td class="text-center" scope="col">'+
-                                '<textarea class="form-control" name="" id="" rows="3"></textarea>'+ 
+                                '<textarea class="form-control" name="comentariocheck['+item['pas_id']+']" id="" rows="3"></textarea>'+ 
                                 '</td>' +
                             '</tr>'
                         );
@@ -61,9 +61,6 @@ window.onload = function(){
                     miCheckbox_si.disable = true;
                 }
                
-                
-              
-                
             },
             error: function (jqXHR) {
                 console.log('error!');

@@ -104,7 +104,6 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-sm" id="MantenimeintoListar"
                                             width="100%" cellspacing="0">
@@ -132,8 +131,6 @@
                                                 <tr>
                                                     @foreach ($gestiones as $list)
                                                 <tr>
-
-
                                                     <td>{{ $list->ges_id }}</td>
                                                     <td>{{ $list->ges_fecha_atencion }} </td>
                                                     <td>{{ $list->tra_nombres }}</td>
@@ -141,6 +138,8 @@
                                                         {{ $list->ges_frecuencia_mantenimiento }}</td>
                                                     <td>{{ $list->ges_fecha_prox_atencion }} </td>
                                                     <td>
+                                                       
+                                                        
                                                         <a type="button" href=" {{ route('pdf.gestion', $list->ges_id)}}"
                                                             class="btn btn-primary btn-circle btn-sm"><i
                                                                 class="fas fa-eye fa-sm"></i></a>
@@ -163,7 +162,6 @@
                                             </tbody>
                                         </table>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
