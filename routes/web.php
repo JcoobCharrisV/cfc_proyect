@@ -35,8 +35,6 @@ Route::get('/calendario', [App\Http\Controllers\CalendarioController::class, 'in
 //RUTA PDF
 Route::get('/g/pdf/{id}', [App\Http\Controllers\PacienteController::class, 'gestion'])->name('pdf.gestion');
 
-
-
 //RUTA EMAIL
  Route::get('/mantenimiento.ver', function (){
 

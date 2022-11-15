@@ -143,8 +143,16 @@ class PacienteController extends Controller
         $email = $pacientes[0]->pac_correo;
         $pdf = PDF::loadView('pdfgestion', compact('pdfInfo','pasospdf'));
 
-        $data = ['foo' => 'baz']; 
-        Mail::send('email', $data, function ($mail) use ($pdf, $email) {
+        
+        $fecha = $gestion[0]->ges_fecha_prox_atencion;
+        date_default_timezone_set('America/Bogota');
+        $fpa = date("Y-m-d H:i:s", strtotime($fecha));
+
+        $dataemail[] = array(
+            "fecha_prox_atencion" => $fpa
+        );
+
+        Mail::send('email', compact('dataemail'), function ($mail) use ($pdf, $email) {
             $mail->from('adminCFC@gmail.com', 'AdminCFC');
             $mail->to($email);
             $mail->attachData($pdf->output(), 'gestion.pdf');
