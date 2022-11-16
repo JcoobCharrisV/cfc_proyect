@@ -48,7 +48,7 @@
                             <div class="text-xs .text-gray-600 text-uppercase mb-1">
                                 Septiembre
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">210</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
                         </div>
                         <div class="col-auto">
                             <i class="far fa-calendar-alt fa-2x text-gray-300"></i>
@@ -70,7 +70,7 @@
                             <div class="text-xs .text-gray-600 text-uppercase mb-1">
                                 Septiembre
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">105</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-calendar-check fa-2x text-gray-300"></i>
@@ -92,7 +92,7 @@
                             <div class="text-xs .text-gray-600 text-uppercase mb-1">
                                 Septiembre
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">25</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
                         </div>
                         <div class="col-auto">
                             <i class="far fa-calendar-plus fa-2x text-gray-300"></i>
@@ -145,9 +145,9 @@
                             <tbody>
                                 @foreach($pacientes as $paciente)
                                     <tr>
-                                        <td>{{ $paciente->pac_identificacion  }}</td>
+                                        <td>{{ $paciente->pac_id  }}</td>
                                         <td>{{ $paciente->pac_nombres }}</td>
-                                        <td>{{ $paciente->pac_identificacion }}</td>
+                                        <td>{{ $paciente->pac_correo }}</td>
                                         <td>{{ $paciente->pac_telefono }}</td>
                                         <td>{{ $paciente->pac_proxima_atencion }}</td>
 

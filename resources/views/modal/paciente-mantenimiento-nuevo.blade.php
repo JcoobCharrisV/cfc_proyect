@@ -25,8 +25,8 @@
                         {{-- combobox con los servicios, tipos, tratamientos --}}
                         <label for="mantenimiento-servicio-doctor">Servicio Prestado</label>
                         <div class="input-group mb-2">
-                            <select class="form-control" id="tra_id" name="tra_id" value="{{ old('tra_id') }}">
-                                <option>-- Escoja su servicio--</option>
+                            <select class="form-control" id="tra_id" name="tra_id" required>
+                                <option value="" selected disabled>-- Escoja su servicio--</option>
                                 @foreach ($mantenimientos as $list)
                                     <option value="{{ $list->tra_id }}"> {{ $list->ser_nombres }} -
                                         {{ $list->tra_nombres }}
@@ -35,11 +35,11 @@
                                 @endforeach
                             </select>
 
-                            <select class="form-control" id="doc_id" name="doc_id" value="{{ old('doc_id') }}">
-                                <option value="">-- Escoja su doctor --</option>
-                                @foreach ($doctores as $list)
+                            <select class="form-control" id="doc_id" name="doc_id" required>
+                                <option value="" selected disabled>-- Escoja su doctor --</option>
+                                {{-- @foreach ($doctores as $list)
                                     <option value="{{ $list->doc_id }}">{{ $list->doc_nombres }}</option>
-                                @endforeach
+                                @endforeach --}}
                             </select>
                         </div>
 
@@ -81,9 +81,9 @@
                                 <div class="input-group mb-2">
                                     <input type="number" aria-label="Numero" id="ges_frecuencia_mantenimiento_numero"
                                         name="ges_frecuencia_mantenimiento_numero" class="form-control"
-                                        value="{{ old('ges_frecuencia_mantenimiento') }}">
+                                        value="{{ old('ges_frecuencia_mantenimiento') }}" required>
                                     <select class="form-control" id="ges_frecuencia_mantenimiento"
-                                        name="ges_frecuencia_mantenimiento">
+                                        name="ges_frecuencia_mantenimiento" required>
                                         <option value="">-- Seleccionar --</option>
                                         <option value="dias">Días</option>
                                         <option value="semanas">Semanas</option>
@@ -106,14 +106,14 @@
                                         <div class="col-md-6">
                                             <input  type="text" class="form-control" name="ges_fecha_prox_atencion"
                                                 id="ges_fecha_prox_atencion"
-                                                value="{{ old('ges_fecha_prox_atencion') }}"disabled>
+                                                value="{{ old('ges_fecha_prox_atencion') }}"disabled required>
                                             <input  style="display:none;" type="text" class="form-control" name="ges_fecha_prox_atencion"
                                                 id="ges_fecha_prox_atencion1" value="{{ old('ges_fecha_prox_atencion') }}">
                                         </div>
                                         <div class="col-md-6">
                                             <input type="time" class="form-control" name="ges_hora_prox_atencion"
                                                 id="ges_hora_prox_atencion"
-                                                value="{{ old('ges_hora_prox_atencion1') }}">
+                                                value="{{ old('ges_hora_prox_atencion1') }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@
                         {{-- Observacion de la gestion en mantenimiento --}}
                         <div class="form-group">
                             <label for="mantenimiento-observacion">Observación</label>
-                            <textarea class="form-control" id="ges_notas" rows="3" name="ges_notas"value="{{ old('ges_notas') }}"></textarea>
+                            <textarea class="form-control" id="ges_notas" rows="3" name="ges_notas"value="{{ old('ges_notas') }}" required></textarea>
                         </div>
                     </form>
 

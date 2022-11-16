@@ -115,19 +115,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for ($i = 0; $i < count($pasospdf); $i++)
+                                @if ($pasospdf[0] == null)
                                     <tr>
-                                        <td style="text-align: left;">{{ $pasospdf[$i]['paso_descripcion'] }}</td>
-                                        @if ($pasospdf[$i]['verificador'] == 'SI')
-                                            <td>X</td>
-                                            <td></td>
-                                        @else
-                                            <td></td>
-                                            <td>X</td>
-                                        @endif
-                                        <td>{{ $pasospdf[$i]['comentario'] }}</td>
+                                        <td>Esta gestion no se le registraron pasos</td>
                                     </tr>
-                                @endfor
+                                @else
+                                    @for ($i = 0; $i < count($pasospdf); $i++)
+                                        <tr>
+                                            <td style="text-align: left;">{{ $pasospdf[$i]['paso_descripcion'] }}</td>
+                                            @if ($pasospdf[$i]['verificador'] == 'SI')
+                                                <td>X</td>
+                                                <td></td>
+                                            @else
+                                                <td></td>
+                                                <td>X</td>
+                                            @endif
+                                            <td>{{ $pasospdf[$i]['comentario'] }}</td>
+                                        </tr>
+                                    @endfor
+                                @endif
                             </tbody>
                     </div>
                 </thead>

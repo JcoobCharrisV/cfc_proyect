@@ -87,7 +87,7 @@ a[x-apple-data-detectors] {
                   <td class="es-m-p0r" valign="top" align="center" style="padding:0;Margin:0;width:560px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="center" style="padding:0;Margin:0;padding-bottom:10px;font-size:0px"><img src="" width="150" title="Logo"></td>
+                      <td align="center" style="padding:0;Margin:0;padding-bottom:10px;font-size:0px"></td>
                      </tr>
                    </table></td>
                  </tr>

@@ -71,39 +71,71 @@ window.onload = function(){
     }
 
     function fechaproxima(){
+        let numero_prox_fecha = document.getElementById('ges_frecuencia_mantenimiento_numero').value;
+        let tipo_prox_fecha = document.getElementById('ges_frecuencia_mantenimiento').value;
 
-        let $numero_prox_fecha = document.getElementById('ges_frecuencia_mantenimiento_numero').value;
-        let $tipo_prox_fecha = document.getElementById('ges_frecuencia_mantenimiento').value;
-
-        switch ($tipo_prox_fecha) {
-            case "dias":
-                $dias = $numero_prox_fecha;
-                break;
-            case "meses":
-                $dias = $numero_prox_fecha*31;
-                break;
-            case "semanas": 
-                $dias = $numero_prox_fecha*7;
-                break;
-            case "years":
-                $dias = $numero_prox_fecha*365;
-                break;
-            default:
-                $dias = 0;
-        }  
-        
-        if($dias != 0){
-            let hoy = new Date();
-            let fchMilisegundos = 1000 * 60 * 60 * 24 * $dias;
-            let suma = hoy.getTime() + fchMilisegundos; //getTime devuelve milisegundos de esa fecha
-            let fechaDentroDeUnaSemana = new Date(suma).toLocaleDateString();
-
-            document.getElementById('ges_fecha_prox_atencion').value = fechaDentroDeUnaSemana;
-            document.getElementById('ges_fecha_prox_atencion1').value = fechaDentroDeUnaSemana;
+        const SendDatos = {
+            'numero' : numero_prox_fecha,
+            'tipo' : tipo_prox_fecha
         }
 
+        $.ajax({
+            url: '/calculo/fecha',
+            type: 'GET',
+            dataType: 'json',
+            data: SendDatos,
+            success: function (response) {
+               document.getElementById('ges_fecha_prox_atencion').value = response.a;
+               document.getElementById('ges_fecha_prox_atencion1').value = response.a;
+            },
+            error: function (jqXHR) {
+                console.log('error!');
+            }
+        });
         
     }
+
+    /* SELECT DINAMICO */
+    let $select_tratamiento = document.getElementById('tra_id')
+    let $select_doctores = document.getElementById('doc_id')
+
+    /* CARGAR DOC_MED */
+    function cargarDoctores(sendDatos) {
+
+        $.ajax({
+            url: '/combo/tra/doc',
+            type: 'GET',
+            dataType: 'json',
+            data: sendDatos,
+            success: function (response) {
+                const respuestas = response.doctores;
+
+                let template = '<option class="form-control" value="" selected disabled>-- Escoja su doctor --</option>'
+
+                respuestas.forEach(respuesta => {
+                    template += `<option class="form-control" value="${respuesta.doc_id}">${respuesta.doc_nombres}</option>`;
+                })
+
+                $select_doctores.innerHTML = template;
+
+            },
+            error: function (jqXHR) {
+                console.log('error!');
+            }
+        });
+
+    }
+
+    $select_tratamiento.addEventListener('change', () => {
+        const tra_id = $select_tratamiento.value
+
+        const sendDatos = {
+            'tra_id': tra_id
+        }
+        
+        cargarDoctores(sendDatos)
+
+    })
     
 }
 
