@@ -12,8 +12,7 @@
         <form>
           <div class="form-group">
             <label for="cfc-doctor-editar">Seleccionar Doctor</label>
-            <a data-toggle="tooltip" data-placement="top" title="Selección multiple permitida">
-                <i class="fas fa-info-circle fa-sm"></i>
+            <a data-toggle="tooltip" data-placement="top" title="">
             </a>
             <select multiple class="form-control" id="cfc-doctor-editar">
               <option>Doctor 1</option>

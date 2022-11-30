@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Servicios;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class ServiciosController extends Controller
@@ -26,7 +28,10 @@ class ServiciosController extends Controller
      */
     public function create()
     {
-        //
+        //trae los registro con el estado = 1
+        $total = Servicios::count();
+        $servicios = Servicios::where('ser_estados', '=', '1')->get();
+        return view("servicios.servicios", compact('servicios', 'total'));
     }
 
     /**
@@ -37,7 +42,11 @@ class ServiciosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $Servicios = request()->except('_token');
+        Servicios::insert($Servicios);
+        return redirect('/servicios');
+
     }
 
     /**
@@ -57,9 +66,9 @@ class ServiciosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Servicios $servicios)
     {
-        //
+        
     }
 
     /**
@@ -71,7 +80,10 @@ class ServiciosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $datosServicio = request()->except(['_token','_method']);
+        Servicios::where('ser_id','=', $id)->update($datosServicio);
+        return redirect('/servicios');
     }
 
     /**
@@ -82,6 +94,8 @@ class ServiciosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // desactiva el estado a inactio = 0
+        Servicios::where('ser_id', $id)->update(['ser_estados' => '0']);
+        return redirect('/servicios');
     }
 }

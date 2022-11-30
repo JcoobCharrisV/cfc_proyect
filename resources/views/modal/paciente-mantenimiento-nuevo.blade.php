@@ -13,6 +13,9 @@
                 <input type="text" value="{{ $id }}" name="pac_id" style="display:none;">
                 {{-- -modal mantenimiento fecha   --}}
                 <div class="modal-body">
+                    @php
+                       date_default_timezone_set('America/Bogota'); 
+                    @endphp
                     <div class="alert alert-warning text-center" role="alert">
                         <a class="alert-link" id="ges_fecha_atencion" name="ges_fecha_atencion"
                             value="{{ old('ges_fecha_atencion') }}">Fecha de
@@ -28,9 +31,9 @@
                             <select class="form-control" id="tra_id" name="tra_id" required>
                                 <option value="" selected disabled>-- Escoja su servicio--</option>
                                 @foreach ($mantenimientos as $list)
-                                    <option value="{{ $list->tra_id }}"> {{ $list->ser_nombres }} -
+                                    <option value="{{ $list->tra_id }}">
                                         {{ $list->tra_nombres }}
-                                        - {{ $list->tit_nombres }}
+                                        
                                     </option>
                                 @endforeach
                             </select>

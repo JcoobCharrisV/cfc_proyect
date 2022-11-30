@@ -8,28 +8,21 @@
         </button>
       </div>
       <div class="modal-body">
-        
         <form>
           <div class="form-group">
-            <label for="cfc-doctor">Seleccionar Doctor</label>
-            <a data-toggle="tooltip" data-placement="top" title="Selección multiple permitida">
-                <i class="fas fa-info-circle fa-sm"></i>
+            <label for="doc_id">Seleccionar Doctor</label>
+            <a data-toggle="tooltip" data-placement="top" title="">               
             </a>
-            <select multiple class="form-control" id="cfc-doctor">
-              <option>Doctor 1</option>
-              <option>Doctor 2</option>
-              <option>Doctor 3</option>
-              <option>Doctor 4</option>
-              <option>Doctor 5</option>
+            <select multiple class="form-control" id="doc_id">
+              @foreach ($doctores as $list)
+              <option>{{ $list->doc_nombres }}</option> 
+              @endforeach
             </select>
           </div>
           <div class="form-group">
             <label for="cfc-servicio">Seleccionar Servicio</label>
             <select class="form-control" id="cfc-servicio">
-              <option>Servicio 1 - Tratamiento 1 - Tipo 1</option>
-              <option>Servicio 2 - Tratamiento 2 - Tipo 2</option>
-              <option>Servicio 3 - Tratamiento 3 - Tipo 3</option>
-              <option>Servicio 4 - Tratamiento 4 - Tipo 4</option>
+              <option>Tratamiento</option>
             </select>
           </div>
         </form>

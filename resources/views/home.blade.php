@@ -145,7 +145,7 @@
                             <tbody>
                                 @foreach($pacientes as $paciente)
                                     <tr>
-                                        <td>{{ $paciente->pac_id  }}</td>
+                                        <td>{{ $paciente->pac_identificacion}}</td>
                                         <td>{{ $paciente->pac_nombres }}</td>
                                         <td>{{ $paciente->pac_correo }}</td>
                                         <td>{{ $paciente->pac_telefono }}</td>

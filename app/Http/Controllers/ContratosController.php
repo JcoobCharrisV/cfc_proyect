@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Doctores;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DoctoresController extends Controller
+class ContratosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,9 @@ class DoctoresController extends Controller
      */
     public function index()
     {
-        $total = Doctores::count();
-        $doctores = Doctores::where('doc_estado', '=', '1')->get();
-        return view("doctores.doctores", compact("doctores", "total"));
+        $sql = "SELECT * FROM `doctores` WHERE `doc_id` AND `doc_estado` = 1";
+        $doctores = DB::select($sql);
+        return view("contratos.cfc", compact("doctores"));
     }
 
     /**
@@ -28,7 +27,6 @@ class DoctoresController extends Controller
     public function create()
     {
         //
-        return view("");
     }
 
     /**
@@ -39,9 +37,7 @@ class DoctoresController extends Controller
      */
     public function store(Request $request)
     {
-        $Doctores = request()->except('_token');
-        Doctores::insert($Doctores);
-        return redirect('/doctores');
+        //
     }
 
     /**
@@ -75,9 +71,7 @@ class DoctoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $datosDoctores = request()->except(['_token','_method']);
-        Doctores::where('doc_id','=', $id)->update($datosDoctores);
-        return redirect('/doctores');
+        //
     }
 
     /**
@@ -88,8 +82,6 @@ class DoctoresController extends Controller
      */
     public function destroy($id)
     {
-        // desactiva el estado a inactio = 0
-        Doctores::where('doc_id', $id)->update(['doc_estado' => '0']);
-        return redirect('/doctores');
+        //
     }
 }

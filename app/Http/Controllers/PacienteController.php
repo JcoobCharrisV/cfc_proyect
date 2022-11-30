@@ -21,7 +21,8 @@ class PacienteController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
+    //INDEX
     public function index($id)
     {
         //consultas para listar los paciente (panel de control)
@@ -39,7 +40,7 @@ class PacienteController extends Controller
         //consulta para los combobox de los (servicios)
 
         $sql = "SELECT tra.tra_id, ser.ser_nombres, tit.tit_nombres, tra.tra_nombres, stt.stt_id
-        FROM `ser_tra_tip` AS stt
+        FROM `ser_tra_tips` AS stt
         INNER JOIN servicios AS ser on stt.ser_id = ser.ser_id
         INNER JOIN tipos_tratamientos AS tit on stt.tit_id = tit.tit_id
         INNER JOIN tratamientos AS tra on stt.tra_id = tra.tra_id
@@ -58,6 +59,24 @@ class PacienteController extends Controller
         //retorna a la vista
         return view("paciente.pacienteperfil", compact("pacientes", "doctores", "mantenimientos", "id", "gestiones"));
     }
+
+    //INDEX PACIENTE
+    public function create(){
+        $sql = "SELECT * FROM `pacientes` WHERE `pac_id`";
+        $pacientes = DB::select($sql);
+        $total = Paciente::count();
+        $pacientes = Paciente::where('pac_estado', '=', '1')->get();
+        return view("paciente.paciente", compact("pacientes", "total"));
+    }
+
+    //CREAR PACIENTES
+    public function store(Request $request){
+        $Pacientes = request()->except('_token');
+        Paciente::insert($Pacientes);
+        return redirect('/paciente');
+    }
+
+
     //AJAX
     public function cargarDatos(Request $request)
     {
@@ -78,6 +97,7 @@ class PacienteController extends Controller
             )
         );
     }
+
     //GESTION
     public function gestion($id)
     {
@@ -257,7 +277,7 @@ class PacienteController extends Controller
     public function buscar_doctores(request $request){
 
         $sql = "SELECT doc.* 
-        FROM ser_tra_tip AS stt 
+        FROM ser_tra_tips AS stt 
         INNER JOIN stt_doc AS sd ON sd.stt_id = stt.stt_id
         INNER JOIN doctores AS doc ON doc.doc_id = sd.doc_id
         WHERE stt.tra_id = ".$request->tra_id;
@@ -272,4 +292,21 @@ class PacienteController extends Controller
         );
 
     }
+
+    //EDITAR Y ACTUALIZAR
+    public function update(Request $request, $id)
+    {
+
+        $datosPaciente = request()->except(['_token','_method']);
+        Paciente::where('pac_id','=', $id)->update($datosPaciente);
+        return redirect('/paciente');
+    }
+
+    //DELETE
+    public function destroy($id){
+        Paciente::where('pac_id', $id)->update(['pac_estado' => '0']);
+        return redirect('/paciente');
+    }
+
+
 }

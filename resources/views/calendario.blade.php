@@ -41,7 +41,7 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Calendario</h1>
                         <div>
-                            <a href="index.php" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-times mr-1"></i>Cerrar</a>
+                            <a href="{{ route('home') }}" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-times mr-1"></i>Cerrar</a>
                             
                             <button type="button" data-toggle="modal" data-target="#calendario-nuevo" class="btn btn-primary btn-sm" aria-expanded="false">
                                 <i class="fas fa-plus mr-1"></i>Inhabilitar

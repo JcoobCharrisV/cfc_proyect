@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Doctores;
+use App\Models\tipos_tratamientos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DoctoresController extends Controller
+class Tipos_tratamientosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,10 @@ class DoctoresController extends Controller
      */
     public function index()
     {
-        $total = Doctores::count();
-        $doctores = Doctores::where('doc_estado', '=', '1')->get();
-        return view("doctores.doctores", compact("doctores", "total"));
+       
+        $total = tipos_tratamientos::count();
+        $tipos = tipos_tratamientos::where('tit_estado', '=', '1')->get();
+        return view("tipo.tipo", compact("total", "tipos"));
     }
 
     /**
@@ -28,7 +29,6 @@ class DoctoresController extends Controller
     public function create()
     {
         //
-        return view("");
     }
 
     /**
@@ -39,9 +39,10 @@ class DoctoresController extends Controller
      */
     public function store(Request $request)
     {
-        $Doctores = request()->except('_token');
-        Doctores::insert($Doctores);
-        return redirect('/doctores');
+        
+        $Tipo = request()->except('_token');
+        tipos_tratamientos::insert($Tipo);
+        return redirect('/tipo');
     }
 
     /**
@@ -75,9 +76,9 @@ class DoctoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $datosDoctores = request()->except(['_token','_method']);
-        Doctores::where('doc_id','=', $id)->update($datosDoctores);
-        return redirect('/doctores');
+        $datosTipos = request()->except(['_token','_method']);
+        tipos_tratamientos::where('tit_id','=', $id)->update($datosTipos);
+        return redirect('/tipo');
     }
 
     /**
@@ -88,8 +89,7 @@ class DoctoresController extends Controller
      */
     public function destroy($id)
     {
-        // desactiva el estado a inactio = 0
-        Doctores::where('doc_id', $id)->update(['doc_estado' => '0']);
-        return redirect('/doctores');
+        tipos_tratamientos::where('tit_id', $id)->update(['tit_estado' => '0']);
+        return redirect('/tipo');
     }
 }
