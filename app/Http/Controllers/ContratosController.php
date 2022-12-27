@@ -2,86 +2,62 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\stt_doc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ContratosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //INDEX
     public function index()
     {
         $sql = "SELECT * FROM `doctores` WHERE `doc_id` AND `doc_estado` = 1";
         $doctores = DB::select($sql);
-        return view("contratos.cfc", compact("doctores"));
+
+        $sql2 = " SELECT * FROM `ser_tra_tips` WHERE `stt_id` AND`stt_estado`=1";
+        $tratamiento = DB::select($sql2);
+        
+        $sql3 = "SELECT sd.stdoc_id, doc.doc_id, doc.doc_nombres, stt.tra_nombre, tra.tra_id, tra.tra_nombres
+        FROM stt_docs AS sd 
+        INNER JOIN doctores AS doc ON doc.doc_id = sd.doc_id
+        INNER JOIN ser_tra_tips AS stt ON stt.tra_id = sd.stt_id 
+        INNER JOIN tratamientos AS tra ON stt.tra_id = tra.tra_id
+        WHERE sd.sttdoc_estado = 1
+        AND doc.doc_estado = 1"; 
+        $contratos = DB::select($sql3);
+
+        return view("contratos.cfc", compact("doctores", "tratamiento", "contratos"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   //STORE
     public function store(Request $request)
     {
-        //
+
+        foreach ($request->doc_id as $list) {
+            $contrato = new stt_doc();
+            $contrato->doc_id = $list;
+            $contrato->stt_id = $request->stt_id;
+            $contrato->save();
+        }
+
+        return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //ACTUALIZAR
     public function update(Request $request, $id)
     {
-        //
+        $datosContrato = request()->except(['_token','_method']);
+        stt_doc::where('stdoc_id','=', $id)->update($datosContrato);
+        return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //DELETE
     public function destroy($id)
     {
-        //
+        stt_doc::where('stdoc_id', $id)->update(['sttdoc_estado' => '0']);
+        return redirect()->back();
     }
 }

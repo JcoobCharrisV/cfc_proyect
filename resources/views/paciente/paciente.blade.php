@@ -27,6 +27,8 @@
                 @include('layouts.topbar')
                 <!-- End of Topbar -->
 
+                @include('modal.agendarcita')
+
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
@@ -36,6 +38,7 @@
                         <div>
                             <a href="{{ route('home') }}" type="button" class="btn btn-secondary btn-sm"><i
                                     class="fas fa-times mr-1"></i>Cerrar</a>
+
                             <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
                                     data-toggle="dropdown" aria-expanded="false">
@@ -44,14 +47,11 @@
                                 <div class="dropdown-menu">
                                     <div class="dropdown-header">Crear:</div>
                                     <a type="button" data-toggle="modal" data-target="#pacientecreate"
-                                        class="dropdown-item"><i
-                                            class="fas fa-fw fa-calendar-alt mr-1"></i>Pacientes</a>
+                                        class="dropdown-item"><i class="fas fa-user-alt p-1"></i>Pacientes</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
 
                     <!-- Content Row -->
 
@@ -66,7 +66,36 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-
+                                    @if (session('notification'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <span class="alert-icon"><i class="fas fa-thumbs-up"></i></span>
+                                            {{ session('notification') }}
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
+                                    @if (session('notificacion2'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <span class="alert-icon"><i class="fas fa-thumbs-up"></i></span>
+                                            {{ session('notificacion2') }}
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
+                                    @if (session('notificacion3'))
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <span class="alert-icon"><i class="fas fa-trash"></i></span>
+                                            {{ session('notificacion3') }}
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
                                     <!-- tabla elegante -->
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-sm" id="PacienteListar" width="100%"
@@ -80,15 +109,6 @@
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
-                                            {{-- <tfoot class="bg-gray-200">
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre Completo</th>
-                                                    <th>Correo Electrónico</th>
-                                                    <th>Teléfono Celular</th>
-                                                <th>Acciones</th>
-                                                </tr>
-                                            </tfoot> --}}
                                             <tbody>
                                                 @foreach ($pacientes as $list)
                                                     <tr>
@@ -104,6 +124,12 @@
                                                                 data-target="#paciente-edit{{ $list->pac_id }}"
                                                                 class="btn btn-secondary btn-circle btn-sm"><i
                                                                     class="fas fa-pencil-alt fa-sm"></i></a>
+                                                            <div class="btn-group">
+                                                                <a type="button" data-toggle="modal"
+                                                                    data-target="#agendarcitaprox"
+                                                                    class="btn btn-primary btn-circle btn-sm"><i
+                                                                        class="fas fa-book"></i></a>
+                                                            </div>
                                                             <form
                                                                 action="{{ route('paciente.delete', $list->pac_id) }}"
                                                                 method="POST" style="display: inline-block; ">
@@ -116,7 +142,6 @@
                                                                     <i class="fas fa-trash fa-sm"
                                                                         title="Eliminar Registro"></i>
                                                                 </button>
-
                                                             </form>
                                                         </td>
                                                     </tr>
@@ -152,7 +177,8 @@
     </a>
     {{-- MODALES --}}
     @include('modal.pacientecreate')
-    
+
+
 
 
 </body>

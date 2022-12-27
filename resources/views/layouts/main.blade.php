@@ -53,4 +53,5 @@
 </body>
 <script src="{{ asset('js/mantenimiento.js') }}" defer></script>
 
+
 </html>

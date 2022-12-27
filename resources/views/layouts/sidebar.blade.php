@@ -11,7 +11,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ route('home') }}">
             <i class="fas fa-fw fa-home"></i>
-            <span>Panel de Control</span></a>
+            <span>Mantenimiento</span></a>
     </li>
 
     <!-- divisor -->
@@ -42,14 +42,15 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{ route('cfc') }}" data-toggle="collapse" data-target="#collapseThree"
                 aria-expanded="true" aria-controls="collapseThree">
-                <i class="fas fa-fw fa-hospital-alt"></i>
+                <i class="fas fa-fw fa-hospital-alt"></i>	  
                 <span>Servicios</span>
             </a>
             <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="{{ route('servicios') }}"><i class="bi bi-list"></i>Servicio</a>
-                    <a class="collapse-item" href="{{ route('tipo') }}"><i class="bi bi-list"></i>Tipo</a>
-                    <a class="collapse-item" href="{{ route('tratamiento') }}"><i class="bi bi-list"></i>Tratamiento</a>
+                    <a class="collapse-item" href="{{ route('servicios') }}"><i class="fas fa-stethoscope p-1"></i>Especialidad</a>
+                    {{-- <a class="collapse-item" href="{{ route('tipo') }}"><i class="bi bi-list"></i>Tipo</a> --}}
+                    <a class="collapse-item" href="{{ route('tratamiento') }}"><i class="fas fa-book-medical p-1"></i>Tratamientos</a>
+                    <a class="collapse-item" href="{{ route('pasos') }}"><i class="fas fa-shoe-prints p-1"></i>Pasos</a>
 
                 </div>
             </div>
@@ -64,7 +65,7 @@
 
     <!-- Nav Item - CALENDARIO -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('calendario') }}">
+        <a class="nav-link" href="{{ route('calendario') }}"> 
             <i class="fas fa-fw fa-calendar"></i>
             <span>Calendario</span>
         </a>
@@ -80,12 +81,21 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" type="button" data-toggle="modal" data-target="">
-            <i class="fas fa-fw fa-file-excel"></i>
-            <span>Mantenimiento</span>
+        <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseAdministracion"
+            aria-expanded="true" aria-controls="collapseAdministracion">
+            <i class="fas fa-laptop-medical"></i>
+            <span>Administracion</span>
         </a>
+        <div id="collapseAdministracion" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item " href="{{ route('convenios') }}"> <i class="fas fa-plus-square p-1"></i>Convenios</a>
+                <a class="collapse-item " href="{{ route('eps') }}"> <i class="fas fa-heartbeat p-1"></i>Eps</a>
+                <a class="collapse-item " href="{{ route('tipificacion') }}"> <i class="fas fa-comments p-1"></i>Tipificaciónes</a>
+                <a class="collapse-item " href="{{ route('roles') }}"> <i class="fas fa-user-alt p-1"></i>Roles</a>
+                <a class="collapse-item " href="{{ route('usuarios') }}"> <i class="fas fa-user-friends p-1"></i>Usuarios</a>
+            </div>
+        </div>
     </li>
-
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

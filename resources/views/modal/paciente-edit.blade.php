@@ -38,41 +38,68 @@
 
                             </select>
                         </div>
+
                         {{-- NUMERO DE CEDULA --}}
                         <div class="form-group col-6">
                             <label for="pac_identificacion">Número de Identificación:</label>
                             <input type="number" value="{{ $list->pac_identificacion }}" name="pac_identificacion" required
                                 class="form-control" id="pac_identificacion">
                         </div>
+
                         {{-- CORREO --}}
                         <div class="form-group col-12">
                             <label for="pac_correo">Correo Electrónico:</label>
                             <input type="email" value="{{ $list->pac_correo }}" name="pac_correo" class="form-control" required
                                 id="paciente-correo">
                         </div>
+
                         {{-- TELEFONO --}}
                         <div class="form-group col-12">
                             <label for="pac_telefono">Teléfono Celular:</label>
                             <input type="number" value="{{ $list->pac_telefono }}" name="pac_telefono" required
                                 class="form-control" id="pac_telefono">
                         </div>
+
                         {{-- PAIS --}}
                         <div class="form-group col-6">
                             <label for="pac_pais_origen">Pais de origen:</label>
                             <input type="text" value="{{ $list->pac_pais_origen }}" name="pac_pais_origen" required
                                 class="form-control" id="pac_pais_origen">
                         </div>
+
                         {{-- RESIDENCIA --}}
                         <div class="form-group col-6">
                             <label for="pac_residencia">Residencia:</label>
                             <input type="text" value="{{ $list->pac_residencia }}" name="pac_residencia" required
                                 class="form-control" id="pac_residencia">
                         </div>
+
+                        <div class="form-group col-6">
+                            <label for="con_id">Seleccionar Convenio</label>
+                            <select class="form-control" id="con_id" name="con_id">
+                                <option value="{{ $list->con_nombres }}" disabled>{{ $list->con_nombres }}</option>
+                                <option value="">-- Escoja su convenio--</option>
+                                @foreach ($convenios as $list3)
+                                    <option value="{{ $list3->con_id }}">{{ $list3->con_nombres }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                        <div class="form-group col-6">
+                            <label for="eps_id">Seleccionar Eps</label>
+                            <select class="form-control" id="eps_id" name="eps_id">
+                                <option value="{{ $list->eps_id }}" disabled>{{ $list->eps_nombres }}</option>
+                                <option value="" >-- Escoja su  Eps--</option>
+                                @foreach ($eps as $list4)
+                                    <option value="{{ $list4->eps_id }}">{{ $list4->eps_nombres }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                                   
                         {{-- EDAD --}}
                         <div class="form-group col-12">
                             <label for="pac_edad">Edad:</label>
-                            <input type="number"value="{{ $list->pac_edad }}" name="pac_edad" class="form-control" required
-                                id="pac_edad">
+                            <input type="number" value="{{ $list->pac_edad }}" name="pac_edad" class="form-control" id="pac_edad" required >
                         </div>
 
                     </div>

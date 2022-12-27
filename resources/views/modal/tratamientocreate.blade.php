@@ -11,11 +11,11 @@
           <form>
             <div class="form-group">
               <label for="doctor-nombre">Nombre:</label>
-              <input type="text" class="form-control" id="doctor-nombre">
+              <input type="text" class="form-control" id="doctor-nombre" required>
             </div>
             <div class="form-group">
               <label for="doctor-correo">Descripcion:</label>
-              <textarea class="form-control" id="servicio-descripcion" rows="3"></textarea>
+              <textarea class="form-control" id="servicio-descripcion" rows="3" required></textarea>
             </div>
           </form>
         </div>

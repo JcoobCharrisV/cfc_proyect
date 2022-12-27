@@ -32,7 +32,7 @@
 
                     {{-- MODALES --}}
                     @include('modal.tipocreate')
-                    
+
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -69,32 +69,31 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-
+                                    {{-- ALERTA --}}
+                                    @if (session('notification'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <span class="alert-icon"><i class="fas fa-thumbs-up"></i></span>
+                                            {{ session('notification') }}
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
                                     <!-- tabla elegante -->
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-sm" id="PacienteListar" width="100%"
                                             cellspacing="0">
                                             <thead class="bg-gray-200">
                                                 <tr>
-                                                    <th>Codigo</th>
                                                     <th>Nombres</th>
                                                     <th>Descripcion</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
-                                            {{-- <tfoot class="bg-gray-200">
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre Completo</th>
-                                                    <th>Correo Electrónico</th>
-                                                    <th>Teléfono Celular</th>
-                                                <th>Acciones</th>
-                                                </tr>
-                                            </tfoot> --}}
                                             <tbody>
                                                 @foreach ($tipos as $list)
                                                     <tr>
-                                                        <td>{{ $list->tit_id }}</td>
                                                         <td>{{ $list->tit_nombres }}</td>
                                                         <td>{{ $list->tit_descripcion }}</td>
                                                         <td>
@@ -102,14 +101,14 @@
                                                                 data-target="#tipoedit{{ $list->tit_id }}"
                                                                 class="btn btn-secondary btn-circle btn-sm"><i
                                                                     class="fas fa-pencil-alt fa-sm"></i></a>
-                                                            <form
-                                                                action="{{ route('tipo.delete', $list->tit_id) }}"
+                                                            <form action="{{ route('tipo.delete', $list->tit_id) }}"
                                                                 method="POST" style="display: inline-block; ">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger btn-circle btn-sm"
+                                                                <button type="submit"
+                                                                    class="btn btn-danger btn-circle btn-sm"
                                                                     rel="tooltip"
-                                                                    onclick="return confirm('Seguro que quiere eliminar este servicio?') ">
+                                                                    onclick="return confirm('Seguro que quiere eliminar este tipo de tratamiento?') ">
                                                                     <i class="fas fa-trash fa-sm"
                                                                         title="Eliminar Registro"></i>
                                                                 </button>

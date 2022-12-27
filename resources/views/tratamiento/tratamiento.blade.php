@@ -31,7 +31,8 @@
                 <div class="container-fluid">
 
                     {{-- MODALES --}}
-                    @include('modal.servicio-nuevo');
+                    @include('modal.servicio-nuevo')
+
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -67,44 +68,76 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
+                                    @if (session('notification'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <span class="alert-icon"><i class="fas fa-thumbs-up"></i></span>
+                                            {{ session('notification') }}
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
+                                    
+                                    @if (session('notificacion2'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <span class="alert-icon"><i class="fas fa-thumbs-up"></i></span>
+                                            {{ session('notificacion2') }}
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
 
+                                    @if (session('notificacion3'))
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <span class="alert-icon"><i class="fas fa-trash"></i></span>
+                                            {{ session('notificacion3') }}
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
+                                    
                                     <!-- tabla elegante -->
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-sm" id="PacienteListar" width="100%"
                                             cellspacing="0">
                                             <thead class="bg-gray-200">
                                                 <tr>
-                                                    <th>Codigo</th>
                                                     <th>Nombre</th>
+                                                    <th>Precio</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
-                                            {{-- <tfoot class="bg-gray-200">
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre Completo</th>
-                                                    <th>Correo Electrónico</th>
-                                                    <th>Teléfono Celular</th>
-                                                <th>Acciones</th>
-                                                </tr>
-                                            </tfoot> --}}
                                             <tbody>
                                                 @foreach ($tratamientos as $list)
                                                     <tr>
-                                                        <td>{{ $list->tra_id }}</td>
                                                         <td>{{ $list->tra_nombres }}</td>
+                                                        <td>{{ $list->stt_precio }}</td>
                                                         <td>
                                                             <a type="button" data-toggle="modal"
                                                                 data-target="#tratamientoedit{{ $list->tra_id }}"
                                                                 class="btn btn-secondary btn-circle btn-sm"><i
                                                                     class="fas fa-pencil-alt fa-sm"></i></a>
-                                                            <a type="button" data-toggle="modal"
-                                                                data-target="#paciente-mantenimiento-eliminar"
-                                                                class="btn btn-danger btn-circle btn-sm"><i
-                                                                    class="fas fa-trash fa-sm"></i></a>
+                                                            <form
+                                                                action="{{ route('tratamiento.delete', $list->tra_id) }}"
+                                                                method="POST" style="display: inline-block; ">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="btn btn-danger btn-circle btn-sm"
+                                                                    rel="tooltip"
+                                                                    onclick="return confirm('Seguro que quiere eliminar este tratamiento?') ">
+                                                                    <i class="fas fa-trash fa-sm"
+                                                                        title="Eliminar Registro"></i>
+                                                                </button>
+                                                            </form>
                                                         </td>
-                                                        @include('modal.tratamientoedit')
                                                     </tr>
+                                                    @include('modal.tratamientoedit')
                                                 @endforeach
                                             </tbody>
 

@@ -8,10 +8,10 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="{{ route('tratamiento.update', $list->tra_id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
+            <form action="{{ route('tratamiento.update', $list->tra_id) }}" method="POST" name="tratamiento">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
 
                     <div class="form-group">
                         <label for="ser_id">Seleccionar Servicio</label>
@@ -24,7 +24,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="tit_id">Seleccionar Tipo</label>
                         <select class="form-control" id="tit_id" name="tit_id">
                             <option value="{{ $list->tit_id }}" selected>{{ $list->tit_nombres }}</option>
@@ -33,7 +33,8 @@
                                 <option value="{{ $list3->tit_id }}">{{ $list3->tit_nombres }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
+                    
 
                     <div class="form-group">
                         <label for="tra_nombres">Tratamiento:</label>
@@ -41,13 +42,20 @@
                             name="tra_nombres" rows="3">
                     </div>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"><i
-                        class="fas fa-times mr-1"></i>Cancelar</button>
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-save mr-1"></i>Guardar</button>
-            </div>
+                    <div class="form-group">
+                        <label for="stt_precio">Precio Del Tratamiento:</label>
+                        <input type="number" name="stt_precio" value="{{ $list->stt_precio }}" class="form-control" id="stt_precio" required>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"><i
+                            class="fas fa-times mr-1"></i>Cancelar</button>
+                    <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-save mr-1"></i>Guardar</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
+
+

@@ -97,7 +97,7 @@
                                         <hr>
                                         <div class="text-center">
                                             <a class="small" href="">Olvide la Contraseña</a> | <a class="small"
-                                                href="#">Asistencia Técnica</a>
+                                                href="">Asistencia Técnica</a>
                                         </div>
                                     </div>
                                 </div>

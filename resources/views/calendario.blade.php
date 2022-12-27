@@ -33,20 +33,22 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    
-                        @include("modal.calendario-nuevo")
-                
+
+                    @include('modal.calendario-nuevo')
+
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Calendario</h1>
                         <div>
-                            <a href="{{ route('home') }}" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-times mr-1"></i>Cerrar</a>
-                            
-                            <button type="button" data-toggle="modal" data-target="#calendario-nuevo" class="btn btn-primary btn-sm" aria-expanded="false">
+                            <a href="{{ route('home') }}" type="button" class="btn btn-secondary btn-sm"><i
+                                    class="fas fa-times mr-1"></i>Cerrar</a>
+
+                            <button type="button" data-toggle="modal" data-target="#calendario-nuevo"
+                                class="btn btn-primary btn-sm" aria-expanded="false">
                                 <i class="fas fa-plus mr-1"></i>Inhabilitar
                             </button>
-                                
+
                         </div>
                     </div>
 
@@ -58,19 +60,30 @@
                         <div class="col-xl-12 col-lg-12">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Fechas Inhabilitadas</h6>
                                 </div>
+                                @if (session('notification'))
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <span class="alert-icon"><i class="fas fa-thumbs-up"></i></span>
+                                        {{ session('notification') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
+
                                 <!-- Card Body -->
-                                <div class="card-body"> 
-                                    <div id="calendario"></div>   
+                                <div class="card-body">
+                                    <div id="calendario"></div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
 
-                    
+
 
                 </div>
                 <!-- /.container-fluid -->
@@ -79,7 +92,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-                 @include('layouts.footer')
+            @include('layouts.footer')
             <!-- End of Footer -->
 
         </div>

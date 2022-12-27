@@ -14,26 +14,26 @@
                 {{-- -modal mantenimiento fecha   --}}
                 <div class="modal-body">
                     @php
-                       date_default_timezone_set('America/Bogota'); 
+                        date_default_timezone_set('America/Bogota');
                     @endphp
                     <div class="alert alert-warning text-center" role="alert">
                         <a class="alert-link" id="ges_fecha_atencion" name="ges_fecha_atencion"
                             value="{{ old('ges_fecha_atencion') }}">Fecha de
                             Atención:{{ $fecha_actual = date('Y-d-m H:i:s') }}</a>
-                            <input type="text" style="display:none;" class="alert-link" id="ges_fecha_atencion" name="ges_fecha_atencion"
-                            value="{{ $fecha_actual = date('Y-d-m H:i:s') }}">
+                        <input type="text" style="display:none;" class="alert-link" id="ges_fecha_atencion"
+                            name="ges_fecha_atencion" value="{{ $fecha_actual = date('Y-d-m H:i:s') }}">
                     </div>
 
                     <form>
                         {{-- combobox con los servicios, tipos, tratamientos --}}
-                        <label for="mantenimiento-servicio-doctor">Servicio Prestado</label>
+                        <label for="mantenimiento-servicio-doctor">Tratamiento Prestado</label>
                         <div class="input-group mb-2">
                             <select class="form-control" id="tra_id" name="tra_id" required>
-                                <option value="" selected disabled>-- Escoja su servicio--</option>
+                                <option value="" selected disabled>-- Escoja su tratamiento--</option>
                                 @foreach ($mantenimientos as $list)
                                     <option value="{{ $list->tra_id }}">
                                         {{ $list->tra_nombres }}
-                                        
+
                                     </option>
                                 @endforeach
                             </select>
@@ -107,11 +107,12 @@
                                     </a>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <input  type="text" class="form-control" name="ges_fecha_prox_atencion"
+                                            <input type="text" class="form-control" name="ges_fecha_prox_atencion"
                                                 id="ges_fecha_prox_atencion"
                                                 value="{{ old('ges_fecha_prox_atencion') }}"disabled required>
-                                            <input  style="display:none;" type="text" class="form-control" name="ges_fecha_prox_atencion"
-                                                id="ges_fecha_prox_atencion1" value="{{ old('ges_fecha_prox_atencion') }}">
+                                            <input style="display:none;" type="text" class="form-control"
+                                                name="ges_fecha_prox_atencion" id="ges_fecha_prox_atencion1"
+                                                value="{{ old('ges_fecha_prox_atencion') }}">
                                         </div>
                                         <div class="col-md-6">
                                             <input type="time" class="form-control" name="ges_hora_prox_atencion"
@@ -126,9 +127,19 @@
                         {{-- Observacion de la gestion en mantenimiento --}}
                         <div class="form-group">
                             <label for="mantenimiento-observacion">Observación</label>
-                            <textarea class="form-control" id="ges_notas" rows="3" name="ges_notas"value="{{ old('ges_notas') }}" required></textarea>
+                            <textarea class="form-control" id="ges_notas" rows="3" name="ges_notas" value="{{ old('ges_notas') }}"
+                                required></textarea>
                         </div>
                     </form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a type="button" data-toggle="modal"
+                            data-target="#agendarcitaprox"
+                            class="btn btn-sm btn-primary">Agendar Proxima Cita <i
+                                class="	fas fa-book"></i></a>
+                        </div>
+                    </div>
+
 
                     {{-- Guardar Datos --}}
                 </div>

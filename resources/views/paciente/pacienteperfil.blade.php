@@ -37,7 +37,7 @@
                     @include('modal.paciente-mantenimiento-editar')
                     @include('modal.paciente-mantenimiento-mensaje')
                     @include('modal.paciente-mantenimiento-eliminar')
-
+                
 
                     @include('modal.paciente-contactabilidad-editar')
                     @include('modal.paciente-contactabilidad-eliminar')
@@ -69,7 +69,7 @@
                         <div class="alert alert-info" role="alert">
                             <div class="row text-center">
                                 <div class="col-md-12 mb-2">
-                                    <h2>{{ $list->pac_nombres }}</h2>
+                                    <h2>{{ $list->pac_nombres }} {{ $list->pac_apellidos }}</h2>                              
                                 </div>
                             </div>
                             <div class="row text-center">
@@ -81,6 +81,8 @@
                                 <div class="col-md-4">
                                     <h6><strong>Teléfono Celular: </strong> {{ $list->pac_telefono }}</h6>
                                     <h6><strong>Correo Electrónico: </strong> {{ $list->pac_correo }}</h6>
+                                    <h6><strong>Eps: </strong> {{ $list->eps_nombres }}</h6>
+                                    <h6><strong>Convenio: </strong> {{ $list->con_nombres }}</h6>
                                 </div>
                                 <div class="col-md-4">
                                     <h6><strong>País de Origen: </strong>{{ $list->pac_pais_origen }}</h6>
@@ -113,6 +115,7 @@
                                                     <th>Fecha Atención</th>
                                                     <th>Servicio</th>
                                                     <th>Frecuencia</th>
+                                                    <th>Doctor</th>
                                                     <th>Próxima Atención</th>
                                                     <th>Acciones</th>
                                                 </tr>
@@ -136,6 +139,7 @@
                                                     <td>{{ $list->tra_nombres }}</td>
                                                     <td>{{ $list->ges_frecuencia_mantenimiento_numero }}
                                                         {{ $list->ges_frecuencia_mantenimiento }}</td>
+                                                    <td>{{ $list->doc_nombres }}</td>
                                                     <td>{{ $list->ges_fecha_prox_atencion }} </td>
                                                     <td>
                                                        
@@ -146,11 +150,7 @@
                                                         <a type="button" data-toggle="modal"
                                                             data-target="#paciente-mantenimiento-editar"
                                                             class="btn btn-secondary btn-circle btn-sm"><i
-                                                                class="fas fa-pencil-alt fa-sm"></i></a>
-                                                        <a type="button" data-toggle="modal"
-                                                            data-target="#paciente-mantenimiento-mensaje"
-                                                            class="btn btn-warning btn-circle btn-sm"><i
-                                                                class="fas fa-envelope fa-sm"></i></a>
+                                                                class="fas fa-pencil-alt fa-sm"></i></a>                                                        
                                                         <a type="button" data-toggle="modal"
                                                             data-target="#paciente-mantenimiento-eliminar"
                                                             class="btn btn-danger btn-circle btn-sm"><i
@@ -209,14 +209,9 @@
                                                     <td>Buzón de Voz</td>
                                                     <td>El paciente no contesta, se realizaron 3 marcaciones</td>
                                                     <td>
-                                                        <a type="button" data-toggle="modal"
-                                                            data-target="#paciente-contactabilidad-editar"
-                                                            class="btn btn-secondary btn-circle btn-sm"><i
-                                                                class="fas fa-pencil-alt fa-sm"></i></a>
-                                                        <a type="button" data-toggle="modal"
-                                                            data-target="#paciente-contactabilidad-eliminar"
-                                                            class="btn btn-danger btn-circle btn-sm"><i
-                                                                class="fas fa-trash fa-sm"></i></a>
+                                                        <a type="button" href=""
+                                                            class="btn btn-primary btn-circle btn-sm"><i
+                                                                class="fas fa-eye fa-sm"></i></a>
                                                     </td>
                                                 </tr>
                                             </tbody>

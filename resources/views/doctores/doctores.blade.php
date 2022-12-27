@@ -31,8 +31,7 @@
                 <div class="container-fluid">
 
                     {{-- MODALES --}}
-                    
-                    
+
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Perfil del Doctor</h1>
@@ -67,7 +66,17 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-
+                                    @if (session('notification'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <span class="alert-icon"><i class="fas fa-thumbs-up"></i></span>
+                                            {{ session('notification') }}
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
+                                    
                                     <!-- tabla elegante -->
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-sm" id="PacienteListar" width="100%"
@@ -81,25 +90,16 @@
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
-                                            {{-- <tfoot class="bg-gray-200">
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre Completo</th>
-                                                    <th>Correo Electrónico</th>
-                                                    <th>Teléfono Celular</th>
-                                                <th>Acciones</th>
-                                                </tr>
-                                            </tfoot> --}}
                                             <tbody>
                                                 @foreach ($doctores as $list)
                                                     <tr>
                                                         <td>{{ $list->doc_identificacion }}</td>
-                                                        <td>{{ $list->doc_nombres }}</td>
+                                                        <td>{{ $list->doc_nombres }} {{ $list->doc_apellidos }}</td>
                                                         <td>{{ $list->doc_correo }}</td>
-                                                        <td>{{ $list->doc_telefono }}</td>
+                                                        <td>{{ $list->doc_celular }}</td>
                                                         <td>
                                                             <a type="button" data-toggle="modal"
-                                                             data-target="#doctor-perfil{{ $list->doc_id }}"
+                                                                data-target="#doctor-perfil{{ $list->doc_id }}"
                                                                 class="btn btn-primary btn-circle btn-sm"><i
                                                                     class="fas fa-eye fa-sm"></i></a>
 
@@ -107,22 +107,24 @@
                                                                 data-target="#doctoresedit{{ $list->doc_id }}"
                                                                 class="btn btn-secondary btn-circle btn-sm"><i
                                                                     class="fas fa-pencil-alt fa-sm"></i></a>
-                                                            <form
-                                                                action="{{ route('doctor.delete', $list->doc_id) }}"
-                                                                method="POST" style="display: inline-block; ">
+
+                                                            <form action="{{ route('doctores.delete', $list->doc_id) }}"
+                                                                method="POST" style="display: inline-block;">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit"
-                                                                    rel="tooltip" class="btn btn-danger btn-circle btn-sm"
+                                                                    class="btn btn-danger btn-circle btn-sm"
+                                                                    rel="tooltip"
                                                                     onclick="return confirm('Seguro que quiere eliminar este doctor?') ">
                                                                     <i class="fas fa-trash fa-sm"
                                                                         title="Eliminar Registro"></i>
                                                                 </button>
                                                             </form>
+
                                                         </td>
                                                         @include('modal.doctoresedit')
                                                     </tr>
-                                                    
+                                                   
                                                     @include('modal.doctor-perfil')
                                                 @endforeach
                                             </tbody>
@@ -134,7 +136,7 @@
                         </div>
 
                     </div>
-                   
+
 
 
                 </div>

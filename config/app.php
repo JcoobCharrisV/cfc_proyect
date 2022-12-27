@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Bogota',
 
     /*
     |--------------------------------------------------------------------------
@@ -179,6 +179,9 @@ return [
 
         //libreria pdf
         Barryvdh\DomPDF\ServiceProvider::class,
+
+        //permisos
+        Spatie\Permission\PermissionServiceProvider::class,
 
     ],
 

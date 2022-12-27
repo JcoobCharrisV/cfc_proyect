@@ -9,7 +9,7 @@
     <!-- Encabezado de pagina -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Panel de Control</h1>
-
+        @include('modal.paciente-contactabilidad-nuevo')
         <div class="btn-group" role="group">
             <button type="button" class="btn btn-primary btn-sm dropdown-toggle hide" data-toggle="dropdown"
                 aria-expanded="false">
@@ -130,22 +130,11 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                           {{--  <tfoot class="bg-gray-200">
-                                <tr>
-                                    <th>Identificación</th>
-                                    <th>Nombre Completo</th>
-                                    <th>Correo Electrónico</th>
-                                    <th>Teléfono Celular</th>
-                                    <th>Próxima Atención</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </tfoot> --}}
-
                             {{-- tabla con informacion de los pacientes --}}
                             <tbody>
-                                @foreach($pacientes as $paciente)
+                                @foreach ($pacientes as $paciente)
                                     <tr>
-                                        <td>{{ $paciente->pac_identificacion}}</td>
+                                        <td>{{ $paciente->pac_identificacion }}</td>
                                         <td>{{ $paciente->pac_nombres }}</td>
                                         <td>{{ $paciente->pac_correo }}</td>
                                         <td>{{ $paciente->pac_telefono }}</td>
@@ -155,20 +144,23 @@
                                             <a href="{{ route('paciente.perfil', $paciente->pac_id) }}"
                                                 class="btn btn-primary btn-circle btn-sm"><i
                                                     class="fas fa-eye fa-sm"></i></a>
-                                            <a type="button" data-toggle="modal"
-                                                data-target="#paciente-contactabilidad-nuevo"
-                                                class="btn btn-warning btn-circle btn-sm"><i
-                                                    class="fas fa-headphones fa-sm"></i></a>
+
+                                                    <input type="tex" value="{{ $paciente->pac_nombres }}" id="pac_nombres_js" style="display: none;">
+                                                    <input type="tex" value="{{ $paciente->pac_telefono }}" id="pac_telefono_js" style="display: none;">
+                                            
+                                            <a type="button"
+                                                onclick="contactabilidad();"
+                                                data-toggle="modal" data-target="#paciente-contactabilidad-nuevo"
+                                                class="btn btn-warning btn-circle btn-sm"><i class="fas fa-phone"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>
-
+        <script src="{{ asset('js/contactabilidad.js') }}" defer></script>
     </div>
 @endsection

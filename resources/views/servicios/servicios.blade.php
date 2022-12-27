@@ -4,7 +4,7 @@
 <head>
 
     @include('layouts.header')
-    <title>Servicios - listado</title>
+    <title>Especialidades - listado</title>
 
 </head>
 
@@ -36,7 +36,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Servicios</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Especialidades</h1>
                         <div>
                             <a href="{{ route('home') }}" type="button" class="btn btn-secondary btn-sm"><i
                                     class="fas fa-times mr-1"></i>Cerrar</a>
@@ -49,7 +49,7 @@
                                     <div class="dropdown-header">Crear:</div>
                                     <a type="button" data-toggle="modal" data-target="#serviciocreate"
                                         class="dropdown-item"><i
-                                            class="fas fa-fw fa-calendar-alt mr-1"></i>Servicios</a>
+                                            class="fas fa-fw fa-calendar-alt mr-1"></i>Especialidad</a>
                                 </div>
                             </div>
                         </div>
@@ -65,10 +65,42 @@
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Listado de Servicios</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Listado de Especialidades</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
+                                    @if (session('notification'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <span class="alert-icon"><i class="fas fa-thumbs-up"></i></span>
+                                            {{ session('notification') }}
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
+
+                                    @if (session('notification2'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <span class="alert-icon"><i class="fas fa-thumbs-up"></i></span>
+                                            {{ session('notification2') }}
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
+
+                                    @if (session('notification3'))
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <span class="alert-icon"><i class="fas fa-trash"></i></span>
+                                            {{ session('notification3') }}
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
 
                                     <!-- tabla elegante -->
                                     <div class="table-responsive">
@@ -76,36 +108,21 @@
                                             cellspacing="0">
                                             <thead class="bg-gray-200">
                                                 <tr>
-                                                    <th>Codigo</th>
                                                     <th>Nombre</th>
                                                     <th>Descripcion</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
-                                            {{-- <tfoot class="bg-gray-200">
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>Nombre Completo</th>
-                                                    <th>Correo Electrónico</th>
-                                                    <th>Teléfono Celular</th>
-                                                <th>Acciones</th>
-                                                </tr>
-                                            </tfoot> --}}
                                             <tbody>
-                                                @foreach ($servicios as $list)
+                                                @foreach ($especialidades as $list)
                                                     <tr>
-                                                        <td>{{ $list->ser_id }}</td>
                                                         <td>{{ $list->ser_nombres }}</td>
                                                         <td>{{ $list->ser_descripcion }}</td>
                                                         <td>
-
-
                                                             <button type="button" data-toggle="modal"
                                                                 data-target="#servicioedit{{ $list->ser_id }}"
                                                                 class="btn btn-secondary btn-circle btn-sm"><i
                                                                     class="fas fa-pencil-alt fa-sm"></i></button>
-
-
                                                             <form
                                                                 action="{{ route('servicios.delete', $list->ser_id) }}"
                                                                 method="POST" style="display: inline-block; ">
@@ -114,7 +131,7 @@
                                                                 <button type="submit"
                                                                     class="btn btn-danger btn-circle btn-sm"
                                                                     rel="tooltip"
-                                                                    onclick="return confirm('Seguro que quiere eliminar este servicio?') ">
+                                                                    onclick="return confirm('Seguro que quiere eliminar esta especialidad?') ">
                                                                     <i class="fas fa-trash fa-sm"
                                                                         title="Eliminar Registro"></i>
                                                                 </button>

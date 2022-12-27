@@ -14,7 +14,7 @@
     <div id="wrapper">
 
         <!-- sidebar -->
-           @include('layouts.sidebar')
+        @include('layouts.sidebar')
         <!-- end sidebar-->
 
         <!-- Content Wrapper -->
@@ -29,26 +29,30 @@
 
                 <!-- Contenido de la página de inicio -->
                 <div class="container-fluid">
-                        @include("modal.cfc-nuevo"); 
+                    @include('modal.cfc-nuevo')
 
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Contratos</h1>
                         <div>
-                            <a href="{{ route('home') }}" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-times mr-1"></i>Cerrar</a>
+                            <a href="{{ route('home') }}" type="button" class="btn btn-secondary btn-sm"><i
+                                    class="fas fa-times mr-1"></i>Cerrar</a>
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
+                                    data-toggle="dropdown" aria-expanded="false">
                                     <i class="fas fa-bars mr-1"></i>Opciones
                                 </button>
                                 <div class="dropdown-menu">
                                     <div class="dropdown-header">Agrupar:</div>
-                                    <a type="button" data-toggle="modal" data-target="#cfc-nuevo" class="dropdown-item"><i class="fas fa-fw fa-hospital-alt mr-1"></i>Doctor & Servicio</a>
+                                    <a type="button" data-toggle="modal" data-target="#cfc-nuevo"
+                                        class="dropdown-item"><i class="fas fa-fw fa-hospital-alt mr-1"></i>Doctor &
+                                        Especialidad</a>
                                     <div class="dropdown-divider"></div>
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
 
                     <!-- fila de contenido -->
@@ -59,53 +63,65 @@
                         <div class="col-xl-12 col-lg-12">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Listado Doctores & Servicios</h6>
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Listado Doctores & Especialidades</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
 
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-sm" id="DoctorServicioListar" width="100%" cellspacing="0">
+                                        <table class="table table-bordered table-sm" id="DoctorServicioListar"
+                                            width="100%" cellspacing="0">
+
+                                            {{-- TABLA --}}
                                             <thead class="bg-gray-200">
-                                               
                                                 <tr>
-                                                    <th>Código</th>
                                                     <th>Doctor</th>
-                                                    <th>Servicio</th>
+                                                    <th>Tratamiento</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
-                                            {{--<tfoot class="bg-gray-200">
-                                                <tr>
-                                                    <th>Código</th>
-                                                    <th>Doctor</th>
-                                                    <th>Servicio</th>
-                                                    <th>Acciones</th>
-                                                </tr> --}}
-                                            </tfoot>
                                             
+                                            {{-- CONTENIDO DE LA TABLA --}}
                                             <tbody>
-                                                
-                                                <tr>
-                                                    <td>01</td>
-                                                    <td>Roberto Arcon</td>
-                                                    <td>Blanqueamiento Dental</td>
-                                               
-                                                    <td>
-                                                        <a type="button" data-toggle="modal" data-target="#cfc-editar" class="btn btn-secondary btn-circle btn-sm"><i class="fas fa-pencil-alt fa-sm"></i></a>
-                                                        <a type="button" data-toggle="modal" data-target="#cfc-eliminar" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash fa-sm"></i></a>
-                                                    </td>
-                                                </tr>
+                                                @foreach ($contratos as $list)
+                                                     @include('modal.cfc-editar')
+                                                    <tr>
+                                                        <td>{{ $list->doc_nombres }}</td>
+                                                        <td>{{ $list->tra_nombre }}</td>
+                                                        <td>
+                                                            <a type="button" data-toggle="modal"
+                                                                data-target="#cfc-editar{{ $list->stdoc_id }}"
+                                                                class="btn btn-secondary btn-circle btn-sm"><i
+                                                                    class="fas fa-pencil-alt fa-sm"></i></a>
+                                                            
+                                                            <form action="{{ route('cfc.delete', $list->stdoc_id) }}"
+                                                                method="POST" style="display: inline-block; ">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="btn btn-danger btn-circle btn-sm"
+                                                                    rel="tooltip"
+                                                                    onclick="return confirm('Seguro que quiere eliminar este Contrato?') ">
+                                                                    <i class="fas fa-trash fa-sm"
+                                                                        title="Eliminar Registro"></i>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+ 
+                                                @endforeach
                                             </tbody>
+
                                         </table>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
 
-                    </div>      
+                    </div>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -114,7 +130,7 @@
             <!-- End of Main Content -->
 
             <!-- footer -->
-                  @include('layouts.footer')
+            @include('layouts.footer')
             <!-- end footer -->
 
         </div>

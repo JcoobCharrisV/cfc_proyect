@@ -1,4 +1,4 @@
-<div class="modal fade" id="usuario-editar" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="usuario-editarLabel" aria-hidden="true">
+<div class="modal fade" id="usuarioedit" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="usuario-editarLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -18,10 +18,7 @@
             <label for="perfil-correo">Correo Electrónico</label>
             <input type="email" class="form-control" id="perfil-correo">
           </div>
-          <div class="form-group">
-            <label for="perfil-celular">Teléfono Celular</label>
-            <input type="number" class="form-control" id="perfil-celular">
-          </div>
+          
           <div class="form-group">
             <label for="perfil-rol">Rol del Sistema</label>
             <select class="form-control" id="perfil-rol">

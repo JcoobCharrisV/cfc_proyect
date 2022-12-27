@@ -27,7 +27,11 @@ class PacienteController extends Controller
     {
         //consultas para listar los paciente (panel de control)
 
-        $sql = "SELECT * FROM `pacientes` WHERE `pac_id` = " . $id;
+        $sql = "SELECT con.con_id, con.con_nombres, eps.eps_id, eps.eps_nombres, pac.pac_nombres, pac.pac_id, pac.pac_identificacion, pac.pac_correo, pac.pac_telefono, pac.pac_apellidos, pac.pac_tipo_identificacion, pac.pac_pais_origen, pac.pac_residencia, pac.pac_edad 
+        FROM `pacientes` AS pac
+        INNER JOIN convenios AS con on pac.con_id = con.con_id
+        INNER JOIN eps AS eps on pac.eps_id = eps.eps_id
+        WHERE pac.pac_id = " . $id;
 
         $pacientes = DB::select($sql);
 
@@ -39,25 +43,36 @@ class PacienteController extends Controller
 
         //consulta para los combobox de los (servicios)
 
-        $sql = "SELECT tra.tra_id, ser.ser_nombres, tit.tit_nombres, tra.tra_nombres, stt.stt_id
+        $sql = "SELECT tra.tra_id, ser.ser_nombres, tra.tra_nombres, stt.stt_id
         FROM `ser_tra_tips` AS stt
-        INNER JOIN servicios AS ser on stt.ser_id = ser.ser_id
-        INNER JOIN tipos_tratamientos AS tit on stt.tit_id = tit.tit_id
+        INNER JOIN especialidades AS ser on stt.ser_id = ser.ser_id  
         INNER JOIN tratamientos AS tra on stt.tra_id = tra.tra_id
         WHERE stt.stt_estado = 1";
         $mantenimientos = DB::select($sql);
 
-        $sql = "SELECT tra.tra_nombres, ges.ges_frecuencia_mantenimiento, ges.ges_id, ges.ges_frecuencia_mantenimiento_numero, ges.ges_fecha_atencion, ges.ges_fecha_prox_atencion, tra.tra_id 
+        $sql = "SELECT tra.tra_nombres, ges.ges_frecuencia_mantenimiento, ges.ges_id, ges.ges_frecuencia_mantenimiento_numero, ges.ges_fecha_atencion, ges.ges_fecha_prox_atencion, tra.tra_id, doc.doc_id, doc.doc_nombres 
         FROM `gestiones` AS ges 
-        INNER JOIN tratamientos AS tra on ges.tra_id = tra.tra_id 
+        INNER JOIN tratamientos AS tra on ges.tra_id = tra.tra_id
+        INNER JOIN doctores AS doc on ges.doc_id = doc.doc_id 
         WHERE `pac_id`= " . $id;
 
         $gestiones = DB::select($sql);
 
 
+        $sql3 = "SELECT sd.stdoc_id, doc.doc_id, doc.doc_nombres, stt.tra_nombre, tra.tra_id, tra.tra_nombres
+        FROM stt_docs AS sd 
+        INNER JOIN doctores AS doc ON doc.doc_id = sd.doc_id
+        INNER JOIN ser_tra_tips AS stt ON stt.tra_id = sd.stt_id 
+        INNER JOIN tratamientos AS tra ON stt.tra_id = tra.tra_id
+        WHERE sd.sttdoc_estado = 1
+        AND doc.doc_estado = 1"; 
+        $contratos = DB::select($sql3);
+
+
+       
 
         //retorna a la vista
-        return view("paciente.pacienteperfil", compact("pacientes", "doctores", "mantenimientos", "id", "gestiones"));
+        return view("paciente.pacienteperfil", compact("pacientes", "doctores", "mantenimientos", "id", "gestiones", "contratos" ));
     }
 
     //INDEX PACIENTE
@@ -66,16 +81,47 @@ class PacienteController extends Controller
         $pacientes = DB::select($sql);
         $total = Paciente::count();
         $pacientes = Paciente::where('pac_estado', '=', '1')->get();
-        return view("paciente.paciente", compact("pacientes", "total"));
+
+        $sql2 = "SELECT * FROM `convenios`";
+        $convenios = DB::select($sql2);
+
+        $sql3 = "SELECT * FROM `eps`";
+        $eps = DB::select($sql3);
+
+        $sql4 = "SELECT con.con_id, con.con_nombres, eps.eps_id, eps.eps_nombres, pac.pac_nombres, pac.pac_id, pac.pac_identificacion, pac.pac_correo, pac.pac_telefono, pac.pac_apellidos, pac.pac_tipo_identificacion, pac.pac_pais_origen, pac.pac_residencia, pac.pac_edad 
+        FROM `pacientes` AS pac
+        INNER JOIN convenios AS con on pac.con_id = con.con_id
+        INNER JOIN eps AS eps on pac.eps_id = eps.eps_id
+        WHERE pac.pac_id";
+        $pacientes = DB::select($sql4);
+
+        $sql4 = "SELECT * FROM `doctores` WHERE `doc_estado` = 1";
+        $doctores = DB::select($sql4);
+
+        $sql3 = "SELECT sd.stdoc_id, doc.doc_id, doc.doc_nombres, stt.tra_nombre, tra.tra_id, tra.tra_nombres
+        FROM stt_docs AS sd 
+        INNER JOIN doctores AS doc ON doc.doc_id = sd.doc_id
+        INNER JOIN ser_tra_tips AS stt ON stt.tra_id = sd.stt_id 
+        INNER JOIN tratamientos AS tra ON stt.tra_id = tra.tra_id
+        WHERE sd.sttdoc_estado = 1
+        AND doc.doc_estado = 1"; 
+        $contratos = DB::select($sql3);
+
+        $sql2 = "SELECT * FROM `ser_tra_tips` WHERE `stt_id` and `stt_estado`= 1 ORDER BY tra_nombre ASC";
+        $tratamiento = DB::select($sql2);
+
+        
+        return view("paciente.paciente", compact("pacientes", "total", "convenios", "eps", "doctores", "contratos", "tratamiento"));
     }
 
     //CREAR PACIENTES
     public function store(Request $request){
+        
         $Pacientes = request()->except('_token');
         Paciente::insert($Pacientes);
-        return redirect('/paciente');
+        $notification = "!Paciente creado con exito!...";
+        return redirect('/paciente')->with(compact('notification'));
     }
-
 
     //AJAX
     public function cargarDatos(Request $request)
@@ -245,6 +291,7 @@ class PacienteController extends Controller
         );
     }
 
+    //FECHA CALCULO 2
     public function calculo_fecha($numero, $tipo){
 
         $fecha_actual = date("Y-m-d");
@@ -278,7 +325,7 @@ class PacienteController extends Controller
 
         $sql = "SELECT doc.* 
         FROM ser_tra_tips AS stt 
-        INNER JOIN stt_doc AS sd ON sd.stt_id = stt.stt_id
+        INNER JOIN stt_docs AS sd ON sd.stt_id = stt.tra_id
         INNER JOIN doctores AS doc ON doc.doc_id = sd.doc_id
         WHERE stt.tra_id = ".$request->tra_id;
 
@@ -290,7 +337,6 @@ class PacienteController extends Controller
                 "doctores" => $doctores
             )
         );
-
     }
 
     //EDITAR Y ACTUALIZAR
@@ -299,13 +345,16 @@ class PacienteController extends Controller
 
         $datosPaciente = request()->except(['_token','_method']);
         Paciente::where('pac_id','=', $id)->update($datosPaciente);
-        return redirect('/paciente');
+        $notificacion2 ='!El paciente se ha ACTUALIZADO con exito!...';
+        return redirect('/paciente')->with(compact('notificacion2'));
     }
 
     //DELETE
     public function destroy($id){
+        
         Paciente::where('pac_id', $id)->update(['pac_estado' => '0']);
-        return redirect('/paciente');
+        $notificacion3 ='!El paciente se ha ELIMINADO con exito!...';
+        return redirect('/paciente')->with(compact('notificacion3'));
     }
 
 

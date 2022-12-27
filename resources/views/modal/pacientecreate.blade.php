@@ -28,6 +28,7 @@
                             <div class="form-group col-6">
                                 <label for="pac_tipo_identificacion">Tipo de Identificación:</label>
                                 <select class="form-control" name="pac_tipo_identificacion" id="pac_tipo_identificacion" required>
+                                    <option value="" selected disabled>-- Escoja su tipo de identificacion --</option>
                                     <option>CC - Cédula de Ciudadanía</option>
                                     <option>PP - Pasaporte</option>
                                     <option>TI - Tarjeta de identidad</option>
@@ -59,6 +60,30 @@
                             <div class="form-group col-6">
                                 <label for="pac_residencia">Residencia:</label>
                                 <input type="text" name="pac_residencia" class="form-control" id="pac_residencia" required>
+                            </div>
+                            
+                            <div class="form-group col-6 ">
+                                <label for="con_id ">Convenio:</label>
+                                <select class="form-control" id="con_id" name="con_id" required>
+                                    <option value="" selected disabled>-- Escoja su convenio--</option>
+                                    @foreach ($convenios as $list)
+                                        <option value="{{ $list->con_id }}  ">
+                                            {{ $list->con_nombres }}                                           
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group col-6 ">
+                                <label for="eps_id ">Eps:</label>
+                                <select class="form-control" id="eps_id" name="eps_id" required>
+                                    <option value="" selected disabled>-- Escoja su eps--</option>
+                                    @foreach ($eps as $list)
+                                        <option value="{{ $list->eps_id }}">
+                                            {{ $list->eps_nombres }}                                           
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                             {{-- EDAD --}}
                             <div class="form-group col-12">
