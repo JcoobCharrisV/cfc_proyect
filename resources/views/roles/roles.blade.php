@@ -31,7 +31,7 @@
                 <div class="container-fluid">
 
                     {{-- MODALES --}}
-                  @include("modal.rolcreate")
+                    @include('modal.rolcreate')
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Roles</h1>
@@ -75,7 +75,7 @@
                                             </button>
                                         </div>
                                     @endif
-                                
+
                                     <!-- tabla elegante -->
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-sm" id="PacienteListar" width="100%"
@@ -87,29 +87,31 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>
-                                                        @include("modal.rolesedit")
-
-                                                        <a type="button" data-toggle="modal" data-target="#rolesesdit"
-                                                            class="btn btn-secondary btn-circle btn-sm"><i
-                                                                class="fas fa-pencil-alt fa-sm"></i></a>
-
-                                                        <form action="" method="POST"
-                                                            style="display: inline-block; ">
-                                                            <button type="submit"
-                                                                class="btn btn-danger btn-circle btn-sm" rel="tooltip"
-                                                                onclick="return confirm('Seguro que quiere ELIMINAR esta Rol?') ">
-                                                                <i class="fas fa-trash fa-sm"
-                                                                    title="Eliminar Registro"></i>
-                                                            </button>
-
-                                                        </form>
-                                                    </td>
-                                                </tr>
-
+                                                @foreach ($roles as $list)
+                                                    <tr>
+                                                        <td>{{ $list->name }}</td>
+                                                        <td>
+                                                            <a type="button" data-toggle="modal"
+                                                                data-target="#rolesesdit{{ $list->id }}"
+                                                                class="btn btn-secondary btn-circle btn-sm"><i
+                                                                    class="fas fa-pencil-alt fa-sm"></i></a>
+                                                            <form action="{{ route('BorrarRol', $list->id) }}"
+                                                                method="POST" style="display: inline-block; ">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="btn btn-danger btn-circle btn-sm"
+                                                                    rel="tooltip"
+                                                                    onclick="return confirm('Seguro que quiere ELIMINAR esta Rol?') ">
+                                                                    <i class="fas fa-trash fa-sm"
+                                                                        title="Eliminar Registro"></i>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                    @include('modal.rolesedit')
                                             </tbody>
+                                            @endforeach
                                         </table>
                                     </div>
 

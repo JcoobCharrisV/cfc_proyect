@@ -9,7 +9,7 @@
     <!-- Encabezado de pagina -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Panel de Control</h1>
-        @include('modal.paciente-contactabilidad-nuevo')
+
         <div class="btn-group" role="group">
             <button type="button" class="btn btn-primary btn-sm dropdown-toggle hide" data-toggle="dropdown"
                 aria-expanded="false">
@@ -45,10 +45,7 @@
                             <div class="text-xs font-weight-bold text-primary text-uppercase">
                                 Mantenimientos Programados
                             </div>
-                            <div class="text-xs .text-gray-600 text-uppercase mb-1">
-                                Septiembre
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total2 }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="far fa-calendar-alt fa-2x text-gray-300"></i>
@@ -67,10 +64,7 @@
                             <div class="text-xs font-weight-bold text-success text-uppercase">
                                 Mantenimientos Realizados
                             </div>
-                            <div class="text-xs .text-gray-600 text-uppercase mb-1">
-                                Septiembre
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-calendar-check fa-2x text-gray-300"></i>
@@ -81,33 +75,12 @@
         </div>
 
         <!-- Indicador 3 -->
-        <div class="col-md-4 mb-4">
-            <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase">
-                                Mantenimientos Reprogramados
-                            </div>
-                            <div class="text-xs .text-gray-600 text-uppercase mb-1">
-                                Septiembre
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="far fa-calendar-plus fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
     </div>
 
     <!-- Content Row -->
 
     <div class="row">
-
         <!-- Tabla -->
         <div class="col-xl-12 col-lg-12">
             <div class="card shadow mb-4">
@@ -117,6 +90,15 @@
                 </div>
                 <!-- Card Body tabla  -->
                 <div class="card-body">
+                    @if (session('notification'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <span class="alert-icon"><i class="fas fa-thumbs-up"></i></span>
+                            {{ session('notification') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
 
                     <div class="table-responsive">
                         <table class="table table-bordered table-sm" id="PacienteProximo" width="100%" cellspacing="0">
@@ -126,7 +108,6 @@
                                     <th>Nombre Completo</th>
                                     <th>Correo Electrónico</th>
                                     <th>Teléfono Celular</th>
-                                    <th>Próxima Atención</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -134,26 +115,31 @@
                             <tbody>
                                 @foreach ($pacientes as $paciente)
                                     <tr>
-                                        <td>{{ $paciente->pac_identificacion }}</td>
-                                        <td>{{ $paciente->pac_nombres }}</td>
+                                        <td>{{ $paciente->pac_identificacion }} 
+                                        <td>
+                                            <p><a
+                                                    href="{{ route('paciente.perfil', $paciente->pac_id) }}">{{ $paciente->pac_nombres }} {{ $paciente->pac_apellidos }}</a>
+                                            </p>
+                                        </td>
+                                        </td>
                                         <td>{{ $paciente->pac_correo }}</td>
                                         <td>{{ $paciente->pac_telefono }}</td>
-                                        <td>{{ $paciente->pac_proxima_atencion }}</td>
-
                                         <td>
                                             <a href="{{ route('paciente.perfil', $paciente->pac_id) }}"
                                                 class="btn btn-primary btn-circle btn-sm"><i
                                                     class="fas fa-eye fa-sm"></i></a>
 
-                                                    <input type="tex" value="{{ $paciente->pac_nombres }}" id="pac_nombres_js" style="display: none;">
-                                                    <input type="tex" value="{{ $paciente->pac_telefono }}" id="pac_telefono_js" style="display: none;">
-                                            
-                                            <a type="button"
-                                                onclick="contactabilidad();"
-                                                data-toggle="modal" data-target="#paciente-contactabilidad-nuevo"
+                                            <input type="tex" value="{{ $paciente->pac_nombres }}" id="pac_nombres_js"
+                                                style="display: none;">
+                                            <input type="tex" value="{{ $paciente->pac_telefono }}"
+                                                id="pac_telefono_js" style="display: none;">
+
+                                            <a type="button" onclick="contactabilidad();" data-toggle="modal"
+                                                data-target="#paciente-contactabilidad-nuevo{{ $paciente->pac_id }}"
                                                 class="btn btn-warning btn-circle btn-sm"><i class="fas fa-phone"></i></a>
                                         </td>
                                     </tr>
+                                    @include('modal.paciente-contactabilidad-nuevo')
                                 @endforeach
                             </tbody>
                         </table>

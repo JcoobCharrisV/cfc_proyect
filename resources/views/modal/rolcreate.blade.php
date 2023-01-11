@@ -9,31 +9,34 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ url('/roles/enviar') }}" method="POST">
-                    @csrf
+                {!! Form::open(['route' => 'roles.enviar', 'method' => 'POST']) !!}
+                @csrf
+                <div class="form-group">
+                    <label for="">Nombre del Rol:</label>
+                    {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <label for="name">Nombre:</label>
-                        <input type="text" name="name" class="form-control" id="name" required>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12">
-                        <div class="form-group">
-                            <label for="">Permisos para este Rol:</label>
+                        <label for="">Permisos para este Rol:</label>
+                        <br />
+                        @foreach ($permission as $value)
+                            <label
+                                class="form-check-label">{{ Form::checkbox('permission[]', $value->id, false, ['class' => 'name']) }}
+                                {{ $value->name }}</label>
                             <br />
-                             @foreach ($permission as $value)
-                                <label
-                                    class="form-check-label">{{ Form::checkbox('permission[]', $value->id, false, ['class' => 'name']) }}
-                                    {{ $value->name }}</label>
-                                <br />
-                            @endforeach 
-                        </div>
+                        @endforeach
                     </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"><i
                         class="fas fa-times mr-1"></i>Cancelar</button>
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-save mr-1"></i>Guardar</button>
+                {!! Form::close() !!}
             </div>
             </form>
+
         </div>
     </div>
 </div>

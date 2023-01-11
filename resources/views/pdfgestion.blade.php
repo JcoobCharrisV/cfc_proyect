@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -153,8 +154,11 @@
                             <input class="form-control" id="pregunta-1" rows="2">
                             {{ $pdfInfo[0]['observacion'] }}
                         </td>
-                    </tr>
+                    </tr>          
+                
                 </table>
+                {{-- <p>Firma Del Profesional: <img src="{{ $pdfInfo[0]['doc_foto'] }}" alt=""></p> --}}
+                <p>Firma Del Profesional: <img src="./storage/{{ $pdfInfo[0]['doc_foto'] }}" width="100" alt=""></p>
             </div>
         </div>
     </div>

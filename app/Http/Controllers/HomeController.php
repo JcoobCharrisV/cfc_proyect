@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\gestione;
+use App\Models\proxima_atencione;
 use App\Models\recordatorio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class HomeController extends Controller
 {
@@ -37,12 +40,21 @@ class HomeController extends Controller
         $sql2 ="SELECT * FROM `tipificaciones` WHERE `tip_estado`= 1";
         $tipificacion = DB::select($sql2);
 
+        $total = gestione::all()->count();
+        $total2 = proxima_atencione::all()->count();
+
+    
+
         //retorna a la vista
-        return view("home", compact("pacientes", "gestion", "tipificacion", "paciente"));
+        return view("home", compact("pacientes", "gestion", "tipificacion", "paciente", "total", "total2"));
 
     }
 
+    //FUNCION CONTACTABILIDAD
     public function store(Request $request){
-     dd($request->request);
+     $recordatorio = request()->except('_token');
+     recordatorio::insert($recordatorio);
+     $notification = "!Contactabilidad CREADA con exito!";
+     return redirect('/home')->with(compact('notification'));
     }
 }

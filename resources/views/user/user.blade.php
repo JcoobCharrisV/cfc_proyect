@@ -31,7 +31,7 @@
                 <div class="container-fluid">
 
                     {{-- MODALES --}}
-                  @include("modal.usuariocreate")
+                    @include('modal.usuariocreate')
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Usuarios</h1>
@@ -65,7 +65,7 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                
+
                                     <!-- tabla elegante -->
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-sm" id="PacienteListar" width="100%"
@@ -78,30 +78,35 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td></td>
-                                                    <th></th>
-                                                    <td>
-                                                        @include("modal.usuario-editar")
+                                                @foreach ($usuarios as $list)
+                                                    <tr>
+                                                        <td>{{ $list->name }}</td>
+                                                        <th>{{ $list->email }}</th>
+                                                        <td>
 
-                                                        <a type="button" data-toggle="modal" data-target="#usuarioedit"
-                                                            class="btn btn-secondary btn-circle btn-sm"><i
-                                                                class="fas fa-pencil-alt fa-sm"></i></a>
+                                                            @include('modal.usuario-editar')
 
-                                                        <form action="" method="POST"
-                                                            style="display: inline-block; ">
-                                                            <button type="submit"
-                                                                class="btn btn-danger btn-circle btn-sm" rel="tooltip"
-                                                                onclick="return confirm('Seguro que quiere ELIMINAR esta Rol?') ">
-                                                                <i class="fas fa-trash fa-sm"
-                                                                    title="Eliminar Registro"></i>
-                                                            </button>
+                                                            <a type="button" data-toggle="modal"
+                                                                data-target="#usuarioedit"
+                                                                class="btn btn-secondary btn-circle btn-sm"><i
+                                                                    class="fas fa-pencil-alt fa-sm"></i></a>
 
-                                                        </form>
-                                                    </td>
-                                                </tr>
+                                                            <form action=""
+                                                                style="display: inline-block; ">
+                                                                <button type="submit"
+                                                                    class="btn btn-danger btn-circle btn-sm"
+                                                                    rel="tooltip"
+                                                                    onclick="return confirm('Seguro que quiere ELIMINAR esta Rol?') ">
+                                                                    <i class="fas fa-trash fa-sm"
+                                                                        title="Eliminar Registro"></i>
+                                                                </button>
+
+                                                            </form>
+                                                        </td>
+                                                    </tr>
 
                                             </tbody>
+                                            @endforeach
                                         </table>
                                     </div>
 

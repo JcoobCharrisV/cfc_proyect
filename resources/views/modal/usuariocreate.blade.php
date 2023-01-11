@@ -9,38 +9,48 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ url('/usuarios/enviar') }}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="name">Nombre Completo: </label>
-                        <input type="text" class="form-control" name="name" id="name" required>
+                {!! Form::open(['route' => 'usuarios.enviar', 'method' => 'POST']) !!}
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="name">Nombre</label>
+                            {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="email">Correo Electrónico: </label>
-                        <input type="email" class="form-control" name="email" id="email" required>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            {!! Form::text('email', null, ['class' => 'form-control']) !!}
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="id">Seleccionar Rol</label>
-                        <select class="form-control" name="id" id="id" required>
-                            <option value="" selected disabled>-- Escoja su Tratamiento --</option>
-                                <option value="" ></option>                         
-                        </select>
-                    </div>     
-
-                    <div class="form-group">
-                        <label for="password">Contraseña: </label>
-                        <input type="text" class="form-control" name="password" id="password" required>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            {!! Form::password('password', ['class' => 'form-control']) !!}
+                        </div>
                     </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="confirm-password">Confirmar Password</label>
+                            {!! Form::password('confirm-password', ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="">Roles</label>
+                            {!! Form::select('roles[]', $roles, [], ['class' => 'form-control']) !!}
+                        </div>
+                        <br>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+
+
+
+                {!! Form::close() !!}
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"><i
-                        class="fas fa-times mr-1"></i>Cancelar</button>
-                <button type="submit" class="btn btn-sm btn-primary"><i
-                        class="fas fa-sync-alt mr-1"></i>Actualizar</button>
-            </div>
-            </form>
         </div>
     </div>
 </div>

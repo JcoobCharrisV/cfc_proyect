@@ -14,7 +14,12 @@ class ContratosController extends Controller
         $sql = "SELECT * FROM `doctores` WHERE `doc_id` AND `doc_estado` = 1";
         $doctores = DB::select($sql);
 
-        $sql2 = " SELECT * FROM `ser_tra_tips` WHERE `stt_id` AND`stt_estado`=1";
+        $sql2 = "SELECT ser.ser_id, ser.ser_nombres, tra.tra_id, tra.tra_nombres, stt.stt_id, stt.tra_nombre, stt.stt_precio
+        FROM `ser_tra_tips` as stt
+        INNER JOIN especialidades AS ser on stt.ser_id = ser.ser_id
+        INNER JOIN tratamientos AS tra on stt.tra_id = tra.tra_id
+        WHERE stt.stt_estado = 1
+        ORDER BY tra.tra_nombres ASC";
         $tratamiento = DB::select($sql2);
         
         $sql3 = "SELECT sd.stdoc_id, doc.doc_id, doc.doc_nombres, stt.tra_nombre, tra.tra_id, tra.tra_nombres

@@ -17,7 +17,8 @@ class PastratamientoController extends Controller
         FROM `ser_tra_tips` as stt
         INNER JOIN especialidades AS ser on stt.ser_id = ser.ser_id
         INNER JOIN tratamientos AS tra on stt.tra_id = tra.tra_id
-        WHERE stt.stt_estado = 1";
+        WHERE stt.stt_estado = 1
+        ORDER BY tra.tra_nombres ASC";
         $tratamientos = DB::select($sql3);
 
         $sql = "SELECT pat.pat_id, pas.pas_id, pas.pas_descripcion, tra.tra_id, tra.tra_nombres

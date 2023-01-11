@@ -1,4 +1,4 @@
-<form action="{{ url('/proceso/mantenimiento') }}" method="POST">
+<form action="{{ url('/proceso/mantenimiento') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="modal fade" id="paciente-mantenimiento-nuevo" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="paciente-mantenimiento-nuevoLabel" aria-hidden="true">
@@ -16,6 +16,7 @@
                     @php
                         date_default_timezone_set('America/Bogota');
                     @endphp
+                    
                     <div class="alert alert-warning text-center" role="alert">
                         <a class="alert-link" id="ges_fecha_atencion" name="ges_fecha_atencion"
                             value="{{ old('ges_fecha_atencion') }}">Fecha de
@@ -131,15 +132,24 @@
                                 required></textarea>
                         </div>
                     </form>
+
+                    {{-- Proxima cita --}}
                     <div class="row">
                         <div class="col-md-6">
                             <a type="button" data-toggle="modal"
                             data-target="#agendarcitaprox"
                             class="btn btn-sm btn-primary">Agendar Proxima Cita <i
-                                class="	fas fa-book"></i></a>
+                                class="fas fa-book"></i></a>
                         </div>
                     </div>
-
+                    
+                    <div class="form-group">
+                        <label for="doc_foto">Firma Digital del Profesional</label>
+                        @foreach ($gestiones as $list )                       
+                        <input type="file" class="form-control-file" name="doc_foto" id="doc_foto">
+                        {{ $list->doc_foto }}
+                        @endforeach
+                    </div>
 
                     {{-- Guardar Datos --}}
                 </div>

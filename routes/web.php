@@ -24,18 +24,22 @@ Auth::routes();
 
 //RUTAS HOME
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/home/enviar', [App\Http\Controllers\HomeController::class, 'store'])->name('home.enviar');
+
+//RUTA CONTACTABILIDAD
+Route::post('/home/enviar/{id}', [App\Http\Controllers\HomeController::class, 'store'])->name('home.enviar');
+
 
 //RUTAS PACIENTES
 Route::get('/paciente/perfil/{id}', [App\Http\Controllers\PacienteController::class, 'index'])->name('paciente.perfil');
 Route::get('/proceso/mantenimiento', [App\Http\Controllers\PacienteController::class, 'cargarDatos'])->name('mantenimiento.perfil');
 Route::post('/proceso/mantenimiento', [App\Http\Controllers\PacienteController::class, 'sendData'])->name('mantenimiento.perfil');
 Route::get('/calculo/fecha', [App\Http\Controllers\PacienteController::class, 'fecha'])->name('mantenimiento.calculo.fecha');
+Route::post('/cita/enviar', [App\Http\Controllers\PacienteController::class, 'proximacita'])->name('cita.enviar');
 
 //RUTAS USUARIOS
 Route::get('/usuarios', [App\Http\Controllers\UserController::class, 'index'])->name('usuarios');
 Route::post('/usuarios/enviar', [App\Http\Controllers\UserController::class, 'store'])->name('usuarios.enviar');
-
+Route::put('/usuarios/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('usuarios.update');
 
 //RUTAS COMBO BOX GESTION - MANTENIMIENTO
 Route::get('/combo/tra/doc', [App\Http\Controllers\PacienteController::class, 'buscar_doctores'])->name('mantenimiento.combo.tra.doc');
@@ -53,6 +57,7 @@ Route::get('/paciente', [App\Http\Controllers\PacienteController::class, 'create
 Route::post('/paciente/enviar', [App\Http\Controllers\PacienteController::class, 'store'])->name('paciente.enviar');
 Route::delete('/paciente/delete/{id}', [App\Http\Controllers\PacienteController::class, 'destroy'])->name('paciente.delete');
 Route::put('/paciente/update/{id}', [App\Http\Controllers\PacienteController::class, 'update'])->name('paciente.update');
+Route::post('/proxima/enviar/{id}', [App\Http\Controllers\PacienteController::class, 'enviarcita'])->name('proxima.enviar');
 
 //RUTAS DOCTORES
 Route::get('/doctores', [App\Http\Controllers\DoctoresController::class, 'index'])->name('doctores');
@@ -114,11 +119,8 @@ Route::delete('/pasos/delete/{id}', [App\Http\Controllers\PastratamientoControll
 //RUTAS ROLES
 Route::get('/roles', [App\Http\Controllers\RolController::class, 'index'])->name('roles');
 Route::post('/roles/enviar', [App\Http\Controllers\RolController::class, 'store'])->name('roles.enviar');
-
-//RUTA CONTACTABILIDAD
-Route::post('/home/enviar', [App\Http\Controllers\HomeController::class, 'store'])->name('home.enviar');
-
-
+Route::patch('/roles/update/{id}', [App\Http\Controllers\RolController::class, 'update'])->name('UpdateRol');
+Route::delete('/roles/delete/{id}', [App\Http\Controllers\RolController::class, 'destroy'])->name('BorrarRol');
 
 
 //RUTA EMAIL

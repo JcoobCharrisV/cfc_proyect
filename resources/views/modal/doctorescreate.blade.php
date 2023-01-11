@@ -103,7 +103,11 @@
                             <input type="text" pattern="[a-zA-Z]{3,}" name="doc_residencia" class="form-control"
                                 id="doc_residencia" required>
                         </div>
-                            
+                        <div class="form-group">
+                            <label for="doc_foto">Firma Digital del Profesional</label>
+                            <input type="file" class="form-control-file" name="doc_foto" id="doc_foto" required>
+                          </div>
+                        
                     </div>
                 </div>
                 <div class="modal-footer">

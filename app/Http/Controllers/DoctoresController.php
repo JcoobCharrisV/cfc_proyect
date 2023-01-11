@@ -34,8 +34,11 @@ class DoctoresController extends Controller
     //ACTUALIZAR
     public function update(Request $request, $id)
     {
-       
+        
         $datosDoctores = request()->except(['_token','_method']);
+        if($request->hasFile('doc_foto')){
+            $datosDoctores['doc_foto']=$request->file('doc_foto')->store('uploads','public');
+        }      
         Doctores::where('doc_id','=', $id)->update($datosDoctores);
         return redirect('/doctores');
         

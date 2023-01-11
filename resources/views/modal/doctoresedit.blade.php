@@ -23,8 +23,7 @@
                             <select class="form-control" value="{{ $list->doc_tipo_identificacion }}"
                                 name="doc_tipo_identificacion" id="doc_tipo_identificacion" required>
                                 <option value="{{ $list->doc_tipo_identificacion }}" disabled selected>
-                                    {{ $list->doc_tipo_identificacion }}</option>
-                                
+                                    {{ $list->doc_tipo_identificacion }}</option>   
                                 <option>CC - Cédula de Ciudadanía</option>
                                 <option>PP - Pasaporte</option>
                                 <option>RC - Registro Civil</option>
@@ -74,8 +73,7 @@
                             <label for="doc_estado_civil">Estado Civil:</label>
                             <select class="form-control" name="doc_estado_civil" name="doc_estado_civil" id="doc_estado_civil" required>
                                 <option value="{{ $list->doc_estado_civil }}"  disabled selected>
-                                    {{ $list->doc_estado_civil }} </option>
-                                
+                                    {{ $list->doc_estado_civil }} </option>                               
                                 <option>Soltero</option>
                                 <option>Casado</option>
                                 <option>Viudo</option>
@@ -106,11 +104,10 @@
                                 required>
                         </div>
 
-                        {{-- <div class="form-group p-3 col-12">
-                            <strong>Firma Digital Del Doctor: </strong>
-                            <input type="file" class="form-control-file" style="border: 1px solid rgb(0,0,0,0.2)">                            
-                        </div> --}}
-
+                        <div class="form-group">
+                            <label for="doc_foto">Firma Digital del Profesional:</label>
+                            <input type="file" class="form-control-file" value="{{ $list->doc_foto }}" name="doc_foto" id="doc_foto">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

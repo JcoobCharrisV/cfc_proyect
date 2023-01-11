@@ -122,9 +122,9 @@
                                                             </form>
 
                                                         </td>
-                                                        @include('modal.doctoresedit')
+                                                        
                                                     </tr>
-                                                   
+                                                    @include('modal.doctoresedit')
                                                     @include('modal.doctor-perfil')
                                                 @endforeach
                                             </tbody>

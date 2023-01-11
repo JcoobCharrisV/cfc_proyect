@@ -41,6 +41,7 @@
 
                     @include('modal.paciente-contactabilidad-editar')
                     @include('modal.paciente-contactabilidad-eliminar')
+                    @include('modal.agendargestion')
 
                     <!-- Encabezado de la pagina -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -111,7 +112,6 @@
                                             width="100%" cellspacing="0">
                                             <thead class="bg-gray-200">
                                                 <tr>
-                                                    <th>Código</th>
                                                     <th>Fecha Atención</th>
                                                     <th>Servicio</th>
                                                     <th>Frecuencia</th>
@@ -120,21 +120,11 @@
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
-                                            {{--  <tfoot class="bg-gray-200">
-                                                <tr>
-                                                    <th>Código</th>
-                                                    <th>Fecha Atención</th>
-                                                    <th>Servicio</th>
-                                                    <th>Frecuencia</th>
-                                                    <th>Próxima Atención</th>
-                                                    <th>Acciones</th>
-                                                </tr>
-                                            </tfoot> --}}
+                           
                                             <tbody>
                                                 <tr>
                                                     @foreach ($gestiones as $list)
                                                 <tr>
-                                                    <td>{{ $list->ges_id }}</td>
                                                     <td>{{ $list->ges_fecha_atencion }} </td>
                                                     <td>{{ $list->tra_nombres }}</td>
                                                     <td>{{ $list->ges_frecuencia_mantenimiento_numero }}
@@ -180,40 +170,34 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-sm" id="ContactabilidadListar"
                                             width="100%" cellspacing="0">
                                             <thead class="bg-gray-200">
                                                 <tr>
-                                                    <th>Código</th>
                                                     <th>Fecha Gestión</th>
                                                     <th>Tipificación</th>
                                                     <th>Observación</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
-                                            <tfoot class="bg-gray-200">
-                                                <tr>
-                                                    <th>Código</th>
-                                                    <th>Fecha Gestión</th>
-                                                    <th>Tipificación</th>
-                                                    <th>Observación</th>
-                                                    <th>Acciones</th>
-                                                </tr>
-                                            </tfoot>
                                             <tbody>
+                                               @foreach ($contactabilidad as $list2 )                                                                                                 
                                                 <tr>
-                                                    <td>01</td>
-                                                    <td>23/10/2022 15:15</td>
-                                                    <td>Buzón de Voz</td>
-                                                    <td>El paciente no contesta, se realizaron 3 marcaciones</td>
+                                                    <td>{{ $list2->rec_fecha }}</td>
+                                                    <td>{{ $list2->tip_nombres }}</td>
+                                                    <td>{{ $list2->rec_comentario }}</td>
                                                     <td>
-                                                        <a type="button" href=""
-                                                            class="btn btn-primary btn-circle btn-sm"><i
-                                                                class="fas fa-eye fa-sm"></i></a>
+                                                        <div class="btn-group">
+                                                            <a type="button" data-toggle="modal"
+                                                                data-target="#contactabilidadver{{ $list2->rec_id }}"
+                                                                class="btn btn-primary btn-circle btn-sm"><i
+                                                                    class="fas fa-eye fa-sm"></i></a>
+                                                        </div>
                                                     </td>
                                                 </tr>
+                                                @include("modal.contactabilidadver")
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -247,6 +231,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
     <script src="{{ asset('js/mantenimiento.js') }}" defer></script>
+    <script src="{{ asset('js/proximacita.js') }}" defer></script>
 </body>
 
 

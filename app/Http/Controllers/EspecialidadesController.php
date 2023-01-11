@@ -47,6 +47,7 @@ class EspecialidadesController extends Controller
     //ACTUALIZAR
     public function update(Request $request, $id)
     {
+      
         $datosServicio = request()->except(['_token', '_method']);
         especialidade::where('ser_id', '=', $id)->update($datosServicio);
         $notification2 = "!Especialidad ACTUALIZADA con exito!";

@@ -27,7 +27,7 @@
                 @include('layouts.topbar')
                 <!-- End of Topbar -->
 
-                @include('modal.agendarcita')
+
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -126,7 +126,7 @@
                                                                     class="fas fa-pencil-alt fa-sm"></i></a>
                                                             <div class="btn-group">
                                                                 <a type="button" data-toggle="modal"
-                                                                    data-target="#agendarcitaprox"
+                                                                    data-target="#agendarcitaprox{{ $list->pac_id }}"
                                                                     class="btn btn-primary btn-circle btn-sm"><i
                                                                         class="fas fa-book"></i></a>
                                                             </div>
@@ -146,13 +146,75 @@
                                                         </td>
                                                     </tr>
                                                     @include('modal.paciente-edit')
+                                                    @include('modal.agendarcita')
                                                 @endforeach
                                             </tbody>
                                         </table>
                                     </div>
+
                                 </div>
+
                             </div>
                         </div>
+
+
+                    </div>
+                    
+
+                    <div class="row">
+                        <!-- Tabla -->
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Proximas citas</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+
+                                    <!-- tabla elegante -->
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-sm" id="PacienteListar" width="100%"
+                                            cellspacing="0">
+                                            <thead class="bg-gray-200">
+                                                <tr>
+                                                    <th>Paciente</th>
+                                                    <th>Proxima Cita</th>
+                                                    <th>Tratamiento</th>
+                                                    <th>Doctor</th>
+                                                    <th>Observacion</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($proxima_atencion as $list2)
+                                                    <tr>
+                                                        <td>{{ $list2->pac_nombres }}</td>
+                                                        <td>{{ $list2->pro_fecha }}</td>
+                                                        <td>{{ $list2->tra_nombres }}</td>
+                                                        <td>{{ $list2->doc_nombres }}</td>
+                                                        <td>{{ $list2->pro_observacion }}</td>
+                                                        <td>
+                                                            <div class="btn-group">
+                                                                <a type="button" data-toggle="modal"
+                                                                    data-target="#verproximacita{{ $list2->pro_id }}"
+                                                                    class="btn btn-primary btn-circle btn-sm"><i
+                                                                        class="fas fa-book"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                            </tbody>
+                                            @include('modal.verproximacita')
+                                            @endforeach
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
 
                     </div>
 

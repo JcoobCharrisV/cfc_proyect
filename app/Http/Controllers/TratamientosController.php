@@ -55,9 +55,7 @@ class TratamientosController extends Controller
     public function update(Request $request, $id)
     {
         tratamiento::where('tra_id', $id)->update(['tra_nombres'=> $request->tra_nombres]);
-
         ser_tra_tip::where('tra_id', $id)->update(['ser_id'=> $request->ser_id]);
-        ser_tra_tip::where('tra_id', $id)->update(['tit_id'=> $request->tit_id]);
         ser_tra_tip::where('tra_id', $id)->update(['tra_nombre'=> $request->tra_nombres]);
         $notificacion2 = "!Tratamiento ACTUALIZADO con exito!...";
         return redirect('/tratamiento')->with(compact('notificacion2'));
